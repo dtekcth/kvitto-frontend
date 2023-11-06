@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { InputField } from "./components/InputFIeld";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validationScheme";
