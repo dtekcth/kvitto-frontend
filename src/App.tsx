@@ -1,11 +1,11 @@
-import { ReactComponent as ReactLogo } from './logo.svg';
-import './App.css';
+import { ReactComponent as ReactLogo } from './logo.svg'
+import './App.css'
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="App">
       <header className="App-header">
-        <ReactLogo className="App-logo"/>
+        <ReactLogo className="App-logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -19,7 +19,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

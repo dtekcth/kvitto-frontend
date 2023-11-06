@@ -1,33 +1,39 @@
-import { UseFormRegister, FieldError } from "react-hook-form";
-import styled from "@emotion/styled";
-import { OurForm } from "../Form";
-import { HTMLInputTypeAttribute } from "react";
-import { ErrorMessage, Label } from "./styles";
+import { UseFormRegister, FieldError } from 'react-hook-form'
+import styled from '@emotion/styled'
+import { OurForm } from '../Form'
+import { HTMLInputTypeAttribute } from 'react'
+import { ErrorMessage, Label } from './styles'
 
 interface Props {
-  name: keyof OurForm; // ensures the field name is one from the field-type
-  label: string;
-  placeholder?: string | number;
-  type: HTMLInputTypeAttribute;
-  error: FieldError | undefined;
-  register: UseFormRegister<OurForm>;
+  name: keyof OurForm // ensures the field name is one from the field-type
+  label: string
+  placeholder?: string | number
+  type: HTMLInputTypeAttribute
+  error: FieldError | undefined
+  register: UseFormRegister<OurForm>
 }
 
-export const InputField = ({ name, type, label, register, error }: Props) => {
+export const InputField = ({
+  name,
+  type,
+  label,
+  register,
+  error,
+}: Props): JSX.Element => {
   const Input = styled.input`
-    ${error &&
+    ${error != null &&
     `
   border-color: red;
   `}
-  `;
+  `
 
   return (
     <div>
       <Label>
         {label}
         <Input type={type} {...register(name)}></Input>
-        <ErrorMessage>{error && error.message}</ErrorMessage>
+        <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>
     </div>
-  );
-};
+  )
+}

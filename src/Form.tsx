@@ -1,7 +1,7 @@
-import { useForm } from "react-hook-form";
-import { InputField } from "./components/InputFIeld";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./validationScheme";
+import { useForm } from 'react-hook-form'
+import { InputField } from './components/InputFIeld'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { schema } from './validationScheme'
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
 // example form type, should replicate the Request-object expected by api
@@ -9,22 +9,22 @@ import { schema } from "./validationScheme";
 // TODO: use fn+f2 to replace all occurances of the type-name when changed
 // TODO: move the "OurForm" interface to a more resonable place were other types are stored.
 // since it should be useable by e.g. api-calls etc
-export type OurForm = {
-  name: string;
-  cost: number;
-};
+export interface OurForm {
+  name: string
+  cost: number
+}
 
-export const Form = () => {
+export const Form = (): JSX.Element => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     // When the resolver does not cover all fields in OurForm, the resolver will give an error
-  } = useForm<OurForm>({ resolver: yupResolver(schema) });
+  } = useForm<OurForm>({ resolver: yupResolver(schema) })
 
-  const onSubmit = (formData: OurForm) => {
-    console.log(formData);
-  };
+  const onSubmit = (formData: OurForm): void => {
+    console.log(formData)
+  }
 
   return (
     <div>
@@ -46,5 +46,5 @@ export const Form = () => {
         <input type="submit" />
       </form>
     </div>
-  );
-};
+  )
+}

@@ -11,7 +11,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
     "bootstrap": "^5.3.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
@@ -25,7 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "eslintConfig": {
     "extends": [
@@ -46,7 +46,16 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.53.0"
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard-with-typescript": "^39.1.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   }
 }

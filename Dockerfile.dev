@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json .
 
 #RUN yarn install
-RUN npm i
+RUN npm i --legacy-peer-deps
 
 # Copy app files
 COPY . .
