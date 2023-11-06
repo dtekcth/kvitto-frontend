@@ -2,6 +2,10 @@ import { ReactComponent as ReactLogo } from './logo.svg';
 import './App.css';
 
 function App() {
+  let a = 3;
+  a++
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const b = a;
   return (
     <div className="App">
       <header className="App-header">
