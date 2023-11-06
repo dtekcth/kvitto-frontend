@@ -1,10 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import { MyButton } from './design-system/button/button';
 import React from 'react';
 
 function App() {
-  var l: string = ""
   return (
     <div className="App">
       <header className="App-header">
@@ -18,7 +16,6 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <MyButton></MyButton>
           Learn React
         </a>
       </header>
