@@ -1,7 +1,7 @@
 import { ReactComponent as ReactLogo } from './logo.svg';
 import './App.css';
 
-function App() {
+function App(): JSX.Element {
   let a = 3;
   a++
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,7 +14,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
-          className="App-link"
+        className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"

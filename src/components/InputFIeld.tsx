@@ -26,7 +26,7 @@ export const InputField = ({ name, type, label, register, error }: Props) => {
       <Label>
         {label}
         <Input type={type} {...register(name)}></Input>
-        <ErrorMessage>{error && error.message}</ErrorMessage>
+        <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>
     </div>
   );
