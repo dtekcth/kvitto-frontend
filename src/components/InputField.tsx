@@ -20,10 +20,11 @@ export const InputField = ({
   register,
   error,
 }: Props): JSX.Element => {
+  // TODO: extract
   const Input = styled.input`
     ${error != null &&
     `
-  border-color: red;
+  border-color: #fa6607;
   `}
   `
 

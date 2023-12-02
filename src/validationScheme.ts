@@ -10,4 +10,6 @@ export const schema = yup.object<OurForm>().shape({
     .required('Cost is a required field')
     .min(100, 'min cost is 100')
     .max(150, 'max cost is 150'),
+  phone: yup.string().required("A phonenumber is required."),
+  card: yup.string().required("")
 })

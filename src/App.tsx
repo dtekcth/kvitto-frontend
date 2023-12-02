@@ -1,22 +1,11 @@
-import { ReactComponent as ReactLogo } from './logo.svg'
 import './App.css'
+import { Form } from './Form.tsx'
 
 function App(): JSX.Element {
   return (
     <div className="App">
       <header className="App-header">
-        <ReactLogo className="App-logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Reac
-        </a>
+        <Form />
       </header>
     </div>
   )
