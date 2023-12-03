@@ -1,15 +1,16 @@
 import axios from 'axios'
 
-export interface BudgetPost {
+export interface Committee {
   Id: number
   Name: string
   VismaId: number
+  Active: boolean
 }
 
-export async function getBudgetPosts(): Promise<BudgetPost[] | Error> {
+export async function getCommittes(): Promise<Committee[] | Error> {
   // 👇️ const data: GetUsersResponse
   return await axios
-    .get<BudgetPost[]>('http://localhost:3000/budget-posts', {
+    .get<Committee[]>('http://localhost:3000/committees', {
       headers: {
         Accept: 'application/json',
       },

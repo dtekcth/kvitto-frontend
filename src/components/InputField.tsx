@@ -1,25 +1,29 @@
-import { UseFormRegister, FieldError } from 'react-hook-form'
+import {
+  UseFormRegister,
+  FieldError,
+  FieldValues,
+  FieldPath,
+} from 'react-hook-form'
 import styled from '@emotion/styled'
-import { OurForm } from '../Form'
 import { HTMLInputTypeAttribute } from 'react'
 import { ErrorMessage, Label } from './styles'
 
-interface Props {
-  name: keyof OurForm // ensures the field name is one from the field-type
+interface Props<Form extends FieldValues> {
+  name: FieldPath<Form> // ensures the field name is one from the field-type
   label: string
   placeholder?: string | number
   type: HTMLInputTypeAttribute
   error: FieldError | undefined
-  register: UseFormRegister<OurForm>
+  register: UseFormRegister<Form>
 }
 
-export const InputField = ({
+export const InputField = <Form extends FieldValues>({
   name,
   type,
   label,
   register,
   error,
-}: Props): JSX.Element => {
+}: Props<Form>): JSX.Element => {
   // TODO: extract
   const Input = styled.input`
     ${error != null &&
