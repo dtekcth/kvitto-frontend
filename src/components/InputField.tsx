@@ -12,6 +12,7 @@ interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
   label: string
   placeholder?: string | number
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
   type: HTMLInputTypeAttribute
   error: FieldError | undefined
   register: UseFormRegister<Form>
@@ -21,6 +22,7 @@ export const InputField = <Form extends FieldValues>({
   name,
   type,
   label,
+  onChange,
   register,
   error,
 }: Props<Form>): JSX.Element => {
@@ -36,7 +38,9 @@ export const InputField = <Form extends FieldValues>({
     <div>
       <Label>
         {label}
-        <Input type={type} {...register(name)}></Input>
+        <Input type={type} {...register(name, {
+          onChange: onChange
+        })}></Input>
         <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>
     </div>

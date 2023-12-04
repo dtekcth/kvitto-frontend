@@ -31,6 +31,7 @@ export interface OurForm {
   committee: number
   account: string
   clearing: string
+  file: string
 }
 
 // TODO: sync api contract
@@ -62,14 +63,16 @@ export const Form = (): JSX.Element => {
       crowns: 100,
       ore: 0,
       purchaseDate: '2023-12-12',
-      committeeId: 1,
-      budgetPostId: 1,
+      committeeId: 0,
+      budgetPostId: 0,
+      files: uploadedFiles ?? []
     }
     console.log(postPurchases(purchase))
   }
 
   const [budgetpostsNames, setBudgetPost] = useState<DropdownOption[]>()
   const [committees, setCommittees] = useState<DropdownOption[]>()
+  const [uploadedFiles, setFiles] = useState<File[]>()
 
   useEffect(() => {
     void getBudgetPosts().then(result => {
@@ -100,6 +103,15 @@ export const Form = (): JSX.Element => {
     { value: 'comittee', label: 'Comittee card' },
     { value: 'divison', label: 'Divison card' },
   ]
+
+  const fileUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { files } = event.target
+    const selectedFiles = files as FileList
+    const temp: File[] = uploadedFiles ?? []
+    temp.push(selectedFiles?.[0])
+    setFiles(temp)
+    console.log(uploadedFiles)
+  };
 
   return (
     <div>
@@ -171,7 +183,7 @@ export const Form = (): JSX.Element => {
 
         <InputField
           name="account"
-          type="string"
+          type="text"
           label="Account number"
           register={register}
           error={errors.account}
@@ -179,7 +191,7 @@ export const Form = (): JSX.Element => {
 
         <InputField
           name="clearing"
-          type="string"
+          type="text"
           label="Clearing number"
           register={register}
           error={errors.account}
@@ -195,6 +207,15 @@ export const Form = (): JSX.Element => {
           onChange={(option: DropdownOption | null) => {
             option != null && setValue('committee', option.value as number)
           }}
+        />
+
+        <InputField
+          name="file"
+          type="file"
+          label="Upload a receipt"
+          register={register}
+          error={errors.file}
+          onChange={fileUpload}
         />
         <input type="submit" />
       </form>

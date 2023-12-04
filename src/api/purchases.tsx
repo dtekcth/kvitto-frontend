@@ -14,16 +14,18 @@ export interface Purchase {
   purchaseDate: string
   committeeId: number
   budgetPostId: number
+  files: File[]
 }
 
 export async function postPurchases(
   object: Purchase,
 ): Promise<AxiosResponse | Error> {
-  // 👇️ const data: GetUsersResponse
+
+  
   return await axios
     .post('http://localhost:3000/purchases', object, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'multipart/form-data',
       },
     })
     .then(async function (result) {
