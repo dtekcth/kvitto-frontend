@@ -38,9 +38,12 @@ export const InputField = <Form extends FieldValues>({
     <div>
       <Label>
         {label}
-        <Input type={type} {...register(name, {
-          onChange: onChange
-        })}></Input>
+        <Input
+          type={type}
+          {...register(name, {
+            onChange,
+          })}
+        ></Input>
         <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>
     </div>

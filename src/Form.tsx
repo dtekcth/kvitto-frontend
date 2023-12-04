@@ -12,6 +12,7 @@ import { Committee, getCommittes } from './api/committes'
 // import { schema } from './validationScheme'
 // import { yupResolver } from '@hookform/resolvers/yup'
 import { Purchase, postPurchases } from './api/purchases'
+import { FileUpload } from './components/FileUpload'
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
 // example form type, should replicate the Request-object expected by api
@@ -65,26 +66,15 @@ export const Form = (): JSX.Element => {
       purchaseDate: '2023-12-12',
       committeeId: 0,
       budgetPostId: 0,
-      files: uploadedFiles ?? []
+      files: uploadedFiles,
     }
+    setFiles([])
     console.log(postPurchases(purchase))
   }
 
   const [budgetpostsNames, setBudgetPost] = useState<DropdownOption[]>()
   const [committees, setCommittees] = useState<DropdownOption[]>()
-  const [uploadedFiles, setFiles] = useState<File[]>()
-
-  useEffect(() => {
-    void getBudgetPosts().then(result => {
-      if (!(result instanceof Error)) {
-        const temp: DropdownOption[] = []
-        result.forEach((value: BudgetPost, number: number) => {
-          temp.push({ value: value.Id, label: value.Name })
-        })
-        setBudgetPost(temp)
-      }
-    })
-  }, [])
+  const [uploadedFiles, setFiles] = useState<File[]>([])
 
   useEffect(() => {
     void getCommittes().then(result => {
@@ -94,6 +84,16 @@ export const Form = (): JSX.Element => {
           temp.push({ value: value.Id, label: value.Name })
         })
         setCommittees(temp)
+      }
+    })
+
+    void getBudgetPosts().then(result => {
+      if (!(result instanceof Error)) {
+        const temp: DropdownOption[] = []
+        result.forEach((value: BudgetPost, number: number) => {
+          temp.push({ value: value.Id, label: value.Name })
+        })
+        setBudgetPost(temp)
       }
     })
   }, [])
@@ -107,15 +107,15 @@ export const Form = (): JSX.Element => {
   const fileUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { files } = event.target
     const selectedFiles = files as FileList
-    const temp: File[] = uploadedFiles ?? []
+    const temp: File[] = uploadedFiles
     temp.push(selectedFiles?.[0])
     setFiles(temp)
     console.log(uploadedFiles)
-  };
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
         <InputField
           name="name"
           type="text"
@@ -217,8 +217,10 @@ export const Form = (): JSX.Element => {
           error={errors.file}
           onChange={fileUpload}
         />
-        <input type="submit" />
-      </form>
+
+        <FileUpload label={'Upload'} error={undefined} />
+        <button onClick={handleSubmit(onSubmit)}>Submit</button>
+      </div>
     </div>
   )
 }
