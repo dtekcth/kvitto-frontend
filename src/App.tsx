@@ -1,23 +1,24 @@
-import { ReactComponent as ReactLogo } from './logo.svg'
 import './App.css'
+import { Form } from './pages/Form.tsx'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Login } from './pages/Login.tsx';
+import { Header } from './components/Header.tsx';
+import { NoPage } from './pages/NoPage.tsx';
+import { Admin } from './pages/Admin.tsx';
 
 function App(): JSX.Element {
   return (
     <div className="App">
-      <header className="App-header">
-        <ReactLogo className="App-logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Reac
-        </a>
-      </header>
+      <Header/>
+        <BrowserRouter>
+          <Routes>
+              <Route path={"/"} element={<Form/>}/>
+              <Route path={"/login"} element={<Login/>}/>
+              <Route path={"/admin"} element={<Admin/>}/>
+              <Route path={"*"} element={<NoPage/>}/>
+          </Routes>
+        </BrowserRouter>
+      
     </div>
   )
 }
