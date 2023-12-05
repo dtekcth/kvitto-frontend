@@ -115,7 +115,7 @@ export const Form = (): JSX.Element => {
   }
 
   return (
-    <div style={{"margin": "auto"}}>
+    <div style={{"margin": "auto", "width": "40%"}}>
       <div>
         <InputField
           name="name"

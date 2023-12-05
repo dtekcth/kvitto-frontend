@@ -7,7 +7,7 @@ import { NoPage } from './pages/NoPage.tsx';
 
 function App(): JSX.Element {
   return (
-    <div style={{"margin": "auto", "width": "50%"}} className="App">
+    <div className="App">
       <Header/>
         <BrowserRouter>
           <Routes>
