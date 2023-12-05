@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 export interface Committee {
-  Id: number
-  Name: string
-  VismaId: number
-  Active: boolean
+  id: number
+  name: string
+  vismaId: number
+  active: boolean
 }
 
 export async function getCommittes(): Promise<Committee[] | Error> {

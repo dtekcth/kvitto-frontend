@@ -1,18 +1,18 @@
 import { useForm } from 'react-hook-form'
-import { InputField } from './components/InputField'
-import { BudgetPost, getBudgetPosts } from './api/budget-posts'
-import { RadioButton, RadioButtonOption } from './components/RadioButton'
+import { InputField } from '../components/InputField'
+import { BudgetPost, getBudgetPosts } from '../api/budget-posts'
+import { RadioButton, RadioButtonOption } from '../components/RadioButton'
 import { useState, useEffect } from 'react'
-import { Dropdown, DropdownOption } from './components/Dropdown'
+import { Dropdown, DropdownOption } from '../components/Dropdown'
 
 import 'react-datepicker/dist/react-datepicker.css'
-import { Datepicker } from './components/Datepicker'
-import { Textarea } from './components/TextareaField'
-import { Committee, getCommittes } from './api/committes'
+import { Datepicker } from '../components/Datepicker'
+import { Textarea } from '../components/TextareaField'
+import { Committee, getCommittes } from '../api/committes'
 // import { schema } from './validationScheme'
 // import { yupResolver } from '@hookform/resolvers/yup'
-import { Purchase, postPurchases } from './api/purchases'
-import { FileUpload } from './components/FileUpload'
+import { Purchase, postPurchases } from '../api/purchases'
+import { FileUpload } from '../components/FileUpload'
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
 // example form type, should replicate the Request-object expected by api
@@ -52,20 +52,21 @@ export const Form = (): JSX.Element => {
 
   const onSubmit = (formData: OurForm): void => {
     console.log(formData)
+    const dateString = formData.purchasedate.toISOString().split('T')[0]
     const purchase: Purchase = {
-      description: 'Test',
-      paymentType: 'division',
-      name: 'Simon Johansson',
-      phoneNr: '12345',
-      clearing: '1234',
-      accountNumber: '1234567',
+      description: formData.description,
+      paymentType: formData.card,
+      name: formData.name,
+      phoneNr: formData.phone,
+      clearing: formData.clearing,
+      accountNumber: formData.account,
       isHandled: false,
       isApproved: false,
-      crowns: 100,
-      ore: 0,
-      purchaseDate: '2023-12-12',
-      committeeId: 0,
-      budgetPostId: 0,
+      crowns: formData.crowns,
+      ore: formData.ore,
+      purchaseDate: dateString,
+      committeeId: formData.committee,
+      budgetPostId: formData.budgetpost,
       files: uploadedFiles,
     }
     setFiles([])
@@ -81,7 +82,7 @@ export const Form = (): JSX.Element => {
       if (!(result instanceof Error)) {
         const temp: DropdownOption[] = []
         result.forEach((value: Committee, number: number) => {
-          temp.push({ value: value.Id, label: value.Name })
+          temp.push({ value: value.id, label: value.name })
         })
         setCommittees(temp)
       }
@@ -91,7 +92,7 @@ export const Form = (): JSX.Element => {
       if (!(result instanceof Error)) {
         const temp: DropdownOption[] = []
         result.forEach((value: BudgetPost, number: number) => {
-          temp.push({ value: value.Id, label: value.Name })
+          temp.push({ value: value.id, label: value.name })
         })
         setBudgetPost(temp)
       }
@@ -100,21 +101,21 @@ export const Form = (): JSX.Element => {
 
   const cardOptions: RadioButtonOption[] = [
     { value: 'private', label: 'Private card' },
-    { value: 'comittee', label: 'Comittee card' },
-    { value: 'divison', label: 'Divison card' },
+    { value: 'committee', label: 'Comittee card' },
+    { value: 'division', label: 'Divison card' },
   ]
 
-  const fileUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { files } = event.target
-    const selectedFiles = files as FileList
-    const temp: File[] = uploadedFiles
-    temp.push(selectedFiles?.[0])
+  const fileUpload = (file: File): void => {
+    const temp = []
+    uploadedFiles.forEach(value => {
+      temp.push(value)
+    })
+    temp.push(file)
     setFiles(temp)
-    console.log(uploadedFiles)
   }
 
   return (
-    <div>
+    <div style={{"margin": "auto"}}>
       <div>
         <InputField
           name="name"
@@ -130,6 +131,7 @@ export const Form = (): JSX.Element => {
           register={register}
           error={errors.phone}
         />
+
         <RadioButton
           name="card"
           label="What type of card did you use for the purchase?"
@@ -209,16 +211,7 @@ export const Form = (): JSX.Element => {
           }}
         />
 
-        <InputField
-          name="file"
-          type="file"
-          label="Upload a receipt"
-          register={register}
-          error={errors.file}
-          onChange={fileUpload}
-        />
-
-        <FileUpload label={'Upload'} error={undefined} />
+        <FileUpload files={uploadedFiles} label={'Upload'} error={undefined} onChange={fileUpload}/>
         <button onClick={handleSubmit(onSubmit)}>Submit</button>
       </div>
     </div>

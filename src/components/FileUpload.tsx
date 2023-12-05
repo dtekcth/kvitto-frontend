@@ -1,15 +1,16 @@
 import { FieldError } from 'react-hook-form'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { ErrorMessage, Label } from './styles'
 
 interface Props {
   label: string
   placeholder?: string | number
-  onChange?: (files: File[]) => void
+  onChange?: (file: File) => void
   error: FieldError | undefined
+  files: File[]
 }
 
-export const FileUpload = ({ label, onChange, error }: Props): JSX.Element => {
+export const FileUpload = ({ label, onChange, error, files }: Props): JSX.Element => {
   const fileInput = useRef<HTMLInputElement>(null)
   const selectFile = (): void => {
     if (fileInput.current != null) {
@@ -17,34 +18,29 @@ export const FileUpload = ({ label, onChange, error }: Props): JSX.Element => {
     }
   }
 
-  const [uploadedFiles, setFiles] = useState<File[]>([])
-
   const fileUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { files } = event.target
     const selectedFiles = files as FileList
 
-    const temp: File[] = uploadedFiles
-    temp.push(selectedFiles?.[0])
-    setFiles(temp)
-    console.log(uploadedFiles)
-
     if (onChange !== undefined) {
-      onChange(uploadedFiles)
+      onChange(selectedFiles?.[0])
     }
   }
   return (
-    <>
+    <div key={files.length}>
       <Label>
         {label}
-        <input ref={fileInput} type="file" onChange={fileUpload} />
+        <input style={{ "display": "none" }} ref={fileInput} type="file" onChange={fileUpload} />
         <button onClick={selectFile} className="btn btn-primary">
           Upload
         </button>
       </Label>
-      {uploadedFiles.forEach((item, i) => (
-        <div key={i}>{item.name}</div>
-      ))}
+      {files.map((item, i) => {
+        console.log(files)
+        console.log("lold")
+          return <label key={i}> {item.name} </label>
+})}
       <ErrorMessage>{error?.message}</ErrorMessage>
-    </>
+    </div>
   )
 }

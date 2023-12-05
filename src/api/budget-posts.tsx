@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 export interface BudgetPost {
-  Id: number
-  Name: string
-  VismaId: number
+  id: number
+  name: string
+  vismaId: number
 }
 
 export async function getBudgetPosts(): Promise<BudgetPost[] | Error> {
