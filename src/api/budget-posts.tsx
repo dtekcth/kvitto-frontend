@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { API_ADDRESS } from '../Variables'
 
 export interface BudgetPost {
   id: number
@@ -9,7 +10,7 @@ export interface BudgetPost {
 export async function getBudgetPosts(): Promise<BudgetPost[] | Error> {
   // 👇️ const data: GetUsersResponse
   return await axios
-    .get<BudgetPost[]>('http://localhost:3000/budget-posts', {
+    .get<BudgetPost[]>(API_ADDRESS+'/budget-posts', {
       headers: {
         Accept: 'application/json',
       },

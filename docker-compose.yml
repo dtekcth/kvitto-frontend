@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  nginx:
+    container_name: frontend
+    build:
+      args:
+        REACT_APP_API_ADDRESS: "http://localhost:3000"
+    ports:
+      - "80:80"
+

@@ -7,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        REACT_APP_API_ADDRESS: "http://localhost:3000"
     volumes:
       - ./src:/app/src
     ports:
