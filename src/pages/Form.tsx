@@ -13,7 +13,6 @@ import { Committee, getCommittes } from '../api/committes'
 // import { yupResolver } from '@hookform/resolvers/yup'
 import { Purchase, postPurchases } from '../api/purchases'
 import { FileUpload } from '../components/FileUpload'
-import { API_ADDRESS } from '../Variables'
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
 // example form type, should replicate the Request-object expected by api
@@ -79,7 +78,6 @@ export const Form = (): JSX.Element => {
 
   useEffect(() => {
     void getCommittes().then(result => {
-      console.log(API_ADDRESS);
       if (!(result instanceof Error)) {
         const temp: DropdownOption[] = []
         result.forEach((value: Committee, number: number) => {
