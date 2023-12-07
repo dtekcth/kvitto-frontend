@@ -72,7 +72,6 @@ export const Form = (): JSX.Element => {
     setFiles([])
     console.log(postPurchases(purchase))
   }
-
   const [budgetpostsNames, setBudgetPost] = useState<DropdownOption[]>()
   const [committees, setCommittees] = useState<DropdownOption[]>()
   const [uploadedFiles, setFiles] = useState<File[]>([])

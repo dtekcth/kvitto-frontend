@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { API_ADDRESS } from '../Variables'
 
 export interface Purchase {
   description: string
@@ -23,7 +24,7 @@ export async function postPurchases(
 
   
   return await axios
-    .post('http://localhost:3000/purchases', object, {
+    .post(API_ADDRESS+'/purchases', object, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

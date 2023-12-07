@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { API_ADDRESS } from '../Variables'
 
 export interface Committee {
   id: number
@@ -10,7 +11,7 @@ export interface Committee {
 export async function getCommittes(): Promise<Committee[] | Error> {
   // 👇️ const data: GetUsersResponse
   return await axios
-    .get<Committee[]>('http://localhost:3000/committees', {
+    .get<Committee[]>(API_ADDRESS+'/committees', {
       headers: {
         Accept: 'application/json',
       },
