@@ -18,6 +18,10 @@ export interface Purchase {
   files: File[]
 }
 
+export interface PurchaseWithId extends Purchase {
+  id: number
+}
+
 export async function postPurchases(
   object: Purchase,
 ): Promise<AxiosResponse | Error> {
@@ -27,6 +31,25 @@ export async function postPurchases(
     .post(API_ADDRESS+'/purchases', object, {
       headers: {
         'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then(async function (result) {
+      if (result.status === 200) {
+        return result.data
+      }
+      return new Error()
+    })
+    .catch(async function (error) {
+      console.log(error)
+      return new Error(error)
+    })
+}
+
+export async function getPurchases(): Promise<PurchaseWithId[] | Error> {  
+  return await axios
+    .get<PurchaseWithId[]>(API_ADDRESS+'/purchases', {
+      headers: {
+        Accept: 'application/json',
       },
     })
     .then(async function (result) {
