@@ -1,18 +1,19 @@
 import { useForm } from 'react-hook-form'
-import { InputField } from '../components/InputField'
-import { BudgetPost, getBudgetPosts } from '../api/budget-posts'
-import { RadioButton, RadioButtonOption } from '../components/RadioButton'
+import { InputField } from '../../components/InputField'
+import { BudgetPost, getBudgetPosts } from '../../api/budget-posts'
+import { RadioButton, RadioButtonOption } from '../../components/RadioButton'
 import { useState, useEffect } from 'react'
-import { Dropdown, DropdownOption } from '../components/Dropdown'
+import { Dropdown, DropdownOption } from '../../components/Dropdown'
 
-import 'react-datepicker/dist/react-datepicker.css'
-import { Datepicker } from '../components/Datepicker'
-import { Textarea } from '../components/TextareaField'
-import { Committee, getCommittes } from '../api/committes'
+import { Datepicker } from '../../components/Datepicker'
+import { Textarea } from '../../components/TextareaField'
+import { Committee, getCommittes } from '../../api/committes'
 // import { schema } from './validationScheme'
 // import { yupResolver } from '@hookform/resolvers/yup'
-import { Purchase, postPurchases } from '../api/purchases'
-import { FileUpload } from '../components/FileUpload'
+import { Purchase, postPurchases } from '../../api/purchases'
+import { FileUpload } from '../../components/FileUpload'
+
+import  {Page, FormDiv} from "./styles.ts"
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
 // example form type, should replicate the Request-object expected by api
@@ -112,10 +113,9 @@ export const Form = (): JSX.Element => {
     temp.push(file)
     setFiles(temp)
   }
-
   return (
-    <div style={{"margin": "auto", "width": "40%"}}>
-      <div>
+    <Page>
+      <FormDiv>
         <InputField
           name="name"
           type="text"
@@ -212,7 +212,7 @@ export const Form = (): JSX.Element => {
 
         <FileUpload files={uploadedFiles} label={'Upload'} error={undefined} onChange={fileUpload}/>
         <button onClick={handleSubmit(onSubmit)}>Submit</button>
-      </div>
-    </div>
+      </FormDiv>
+    </Page>
   )
 }

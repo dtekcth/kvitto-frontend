@@ -9,6 +9,7 @@ import {
 // import styled from '@emotion/styled'
 import { ErrorMessage, Label } from './styles'
 import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export interface DropdownOption {
   value: string
