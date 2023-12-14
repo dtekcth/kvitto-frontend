@@ -1,4 +1,6 @@
 import Pagination from 'react-bootstrap/Pagination';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import { getPurchases, PurchaseWithId } from '../api/purchases';
 import { useEffect, useState } from 'react';
 
@@ -47,8 +49,28 @@ export const Admin = (): JSX.Element => {
 
   return (
     <div>
-      {shownPurchases} 
-      
-      <Pagination>{items}</Pagination>
+      <Tabs
+      defaultActiveKey="home"
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+      <Tab eventKey="home" title="Home">
+        <div style={{display: 'flex',
+                     alignItems: 'center',
+                     justifyContent: 'center'}}>
+          
+            <div>{shownPurchases}
+            <Pagination>{items}</Pagination>
+            </div> 
+        
+        </div>
+      </Tab>
+      <Tab eventKey="profile" title="Profile">
+        Tab content for Profile
+      </Tab>
+      <Tab eventKey="contact" title="Contact" disabled>
+        Tab content for Contact
+      </Tab>
+    </Tabs>
     </div>  )
 }
