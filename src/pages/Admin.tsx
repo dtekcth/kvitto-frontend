@@ -1,46 +1,55 @@
 import Pagination from 'react-bootstrap/Pagination';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import { getPurchases, PurchaseWithId } from '../api/purchases';
+import { getPaginatedPurchases, PurchaseWithId } from '../api/purchases';
 import { useEffect, useState } from 'react';
+import { DropdownOption } from '../components/Dropdown'
+import Select from 'react-select'
 
 export const Admin = (): JSX.Element => {
-  const purchasesPerPage = 10;
   const items = [];
 
+
   const [purchases, setPurchases] = useState<PurchaseWithId[]>([])
+  const [purchasesLength, setPurchasesLength] = useState<number>(0)
+  const [purchasesPerPage, setPurchasesPerPage] = useState<number>(10)
   const [active, setActive] = useState<number>(1)
 
 
-  const numberOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    console.log(event.currentTarget.innerText)
-    setActive(+event.currentTarget.innerText);
-    
+  const numberOnClick = (number: number): void => {
+    console.log(number)
+    setActive(number);
+    getPurchases(purchasesPerPage, number - 1)
   }
 
-  for (let number = 1; number <= Math.ceil(purchases.length/purchasesPerPage); number++) {
+  const getPurchases = (pageSize: number, pageNumber: number): void => {
+    void getPaginatedPurchases(pageSize, pageNumber).then(result => {
+      if (!(result instanceof Error)) {
+
+        const temp: PurchaseWithId[] = []
+        result.purchases.forEach((value: PurchaseWithId) => {
+          temp.push(value)
+        })
+        console.log(result.numberOfPurchases)
+        setPurchases(temp)
+        setPurchasesLength(result.numberOfPurchases)
+      }
+    })
+  } 
+
+  for (let number = 1; number <= Math.ceil(purchasesLength/purchasesPerPage); number++) {
     items.push(
-      <Pagination.Item key={number} onClick={numberOnClick} active={number === active}>
+      <Pagination.Item key={number} onClick={(): void => (numberOnClick(number))} active={number === active}>
         {number}
       </Pagination.Item>,
     );
   }
 
   useEffect(() => {
-    void getPurchases().then(result => {
-      if (!(result instanceof Error)) {
-        const temp: PurchaseWithId[] = []
-        result.forEach((value: PurchaseWithId) => {
-          temp.push(value)
-        })
-        console.log(temp)
-        setPurchases(temp)
-      }
-    })
-  }, [])
+    void getPurchases(purchasesPerPage, 0)}, [])
 
   const shownPurchases = []
-  for (let index = purchasesPerPage * (active - 1); index <= (purchasesPerPage * (active)); index++) {
+  for (let index = 0; index <= purchases.length; index++) {
     if(purchases[index] != null) {
       shownPurchases.push(<div key={purchases[index].id}>{purchases[index].name}</div>)
     }
@@ -53,24 +62,43 @@ export const Admin = (): JSX.Element => {
       defaultActiveKey="home"
       id="uncontrolled-tab-example"
       className="mb-3"
-    >
-      <Tab eventKey="home" title="Home">
-        <div style={{display: 'flex',
-                     alignItems: 'center',
-                     justifyContent: 'center'}}>
-          
-            <div>{shownPurchases}
-            <Pagination>{items}</Pagination>
-            </div> 
-        
-        </div>
-      </Tab>
-      <Tab eventKey="profile" title="Profile">
-        Tab content for Profile
-      </Tab>
-      <Tab eventKey="contact" title="Contact" disabled>
-        Tab content for Contact
-      </Tab>
-    </Tabs>
+      >
+        <Tab eventKey="home" title="Home">
+          <div style={{display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'}}>
+
+            <Select
+              getOptionLabel={(item: DropdownOption) => item.label}
+              getOptionValue={(item: DropdownOption) => item.value as string}
+              options={[{value:5 ,label:"5"},{value:10 ,label:"10"},{value:25 ,label:"25"},{value:100 ,label: "100"},{value:-1 ,label:"All"},]}
+              onChange={(option: any | null, _) => {
+                if (option != null){
+                  setPurchasesPerPage(option.value)
+                  numberOnClick(1)
+                  getPurchases(option.value, 0)
+                }
+              }}
+            />
+            <div>
+              Total number of purchases: {purchasesLength}
+            </div>
+          </div>
+          <div style={{display: 'flex',
+                       alignItems: 'center',
+                       justifyContent: 'center'}}>
+              <div>{shownPurchases}
+              <Pagination>{items}</Pagination>
+              </div> 
+              
+          </div>
+        </Tab>
+        <Tab eventKey="profile" title="Profile">
+          Tab content for Profile
+        </Tab>
+        <Tab eventKey="contact" title="Contact" disabled>
+          Tab content for Contact
+        </Tab>
+      </Tabs>
     </div>  )
 }
