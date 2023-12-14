@@ -26,11 +26,13 @@ export async function postPurchases(
   object: Purchase,
 ): Promise<AxiosResponse | Error> {
 
-  
+  const cred = localStorage.getItem("credentials")
+  console.log("Creds: "+cred)
   return await axios
     .post(API_ADDRESS+'/purchases', object, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        'Authorization': 'Basic ' + cred
       },
     })
     .then(async function (result) {
@@ -40,16 +42,20 @@ export async function postPurchases(
       return new Error()
     })
     .catch(async function (error) {
-      console.log(error)
+      // console.log(error)
       return new Error(error)
     })
 }
 
 export async function getPurchases(): Promise<PurchaseWithId[] | Error> {  
+  const cred = localStorage.getItem("credentials")
+  console.log("Creds: "+cred)
+
   return await axios
     .get<PurchaseWithId[]>(API_ADDRESS+'/purchases', {
       headers: {
         Accept: 'application/json',
+        'Authorization': 'Basic ' + cred
       },
     })
     .then(async function (result) {

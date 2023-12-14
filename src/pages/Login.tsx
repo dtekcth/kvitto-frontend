@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { InputField } from "../components/InputField"
+import { getLogin } from "../api/login.tsx"
 
 export interface LoginForm {
     username: string
@@ -16,7 +17,7 @@ export const Login = (): JSX.Element => {
       } = useForm<LoginForm>({})
 
       const onSubmit = (formData: LoginForm): void => {
-        
+        console.log(getLogin(formData.username, formData.password)) 
       }
 
   return (
