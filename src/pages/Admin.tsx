@@ -25,7 +25,6 @@ export const Admin = (): JSX.Element => {
   const getPurchases = (pageSize: number, pageNumber: number): void => {
     void getPaginatedPurchases(pageSize, pageNumber).then(result => {
       if (!(result instanceof Error)) {
-
         const temp: PurchaseWithId[] = []
         result.purchases.forEach((value: PurchaseWithId) => {
           temp.push(value)
@@ -87,8 +86,10 @@ export const Admin = (): JSX.Element => {
           <div style={{display: 'flex',
                        alignItems: 'center',
                        justifyContent: 'center'}}>
-              <div>{shownPurchases}
-              <Pagination>{items}</Pagination>
+              <div>
+                <Pagination>{items}</Pagination>
+                {shownPurchases}
+                <Pagination>{items}</Pagination>
               </div> 
               
           </div>
