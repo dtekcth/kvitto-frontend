@@ -49,7 +49,6 @@ export async function postPurchases(
 
 export async function getPurchases(): Promise<PurchaseWithId[] | Error> {  
   const cred = localStorage.getItem("credentials")
-  console.log("Creds: "+cred)
 
   return await axios
     .get<PurchaseWithId[]>(API_ADDRESS+'/purchases', {

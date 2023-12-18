@@ -21,7 +21,7 @@ interface Props<Form extends FieldValues> {
   placeholder?: string | number
   options: DropdownOption[] | undefined
   error: FieldError | undefined
-  control: Control<Form, any>
+  control: Control<Form, unknown>
   onChange: (
     newValue: SingleValue<DropdownOption>,
     actionMeta: ActionMeta<DropdownOption>,
@@ -42,7 +42,7 @@ export const Dropdown = <Form extends FieldValues>({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => {
+        render={({}) => {
           return (
             <>
               <Label>{label}</Label>
@@ -51,7 +51,7 @@ export const Dropdown = <Form extends FieldValues>({
                 getOptionLabel={(item: DropdownOption) => item.label}
                 getOptionValue={(item: DropdownOption) => item.value as string}
                 options={options}
-                onChange={(option: any | null, actionMeta) => {
+                onChange={(option: DropdownOption | null, actionMeta) => {
                   onChange(option, actionMeta)
                 }}
               />
