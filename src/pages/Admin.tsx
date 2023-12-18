@@ -88,11 +88,11 @@ export const Admin = (): JSX.Element => {
                 { value: 100, label: '100' },
                 { value: -1, label: 'All' },
               ]}
-              onChange={(option: any | null, _) => {
+              onChange={(option: DropdownOption | null) => {
                 if (option != null) {
-                  setPurchasesPerPage(option.value)
+                  setPurchasesPerPage(option.value as number)
                   numberOnClick(1)
-                  getPurchases(option.value, 0)
+                  getPurchases(option.value as number, 0)
                 }
               }}
             />
