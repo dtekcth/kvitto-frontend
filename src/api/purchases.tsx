@@ -30,14 +30,13 @@ export interface PaginatedPurchases {
 export async function postPurchases(
   object: Purchase,
 ): Promise<AxiosResponse | Error> {
-
-  const cred = localStorage.getItem("credentials")
-  console.log("Creds: "+cred)
+  const cred = localStorage.getItem('credentials')
+  console.log('Creds: ' + cred)
   return await axios
-    .post(API_ADDRESS+'/purchases', object, {
+    .post(API_ADDRESS + '/purchases', object, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': 'Basic ' + cred
+        Authorization: 'Basic ' + cred,
       },
     })
     .then(async function (result) {
@@ -52,14 +51,14 @@ export async function postPurchases(
     })
 }
 
-export async function getPurchases(): Promise<PaginatedPurchases | Error> {  
-  const cred = localStorage.getItem("credentials")
+export async function getPurchases(): Promise<PaginatedPurchases | Error> {
+  const cred = localStorage.getItem('credentials')
 
   return await axios
-    .get<PaginatedPurchases>(API_ADDRESS+'/purchases', {
+    .get<PaginatedPurchases>(API_ADDRESS + '/purchases', {
       headers: {
         Accept: 'application/json',
-        'Authorization': 'Basic ' + cred
+        Authorization: 'Basic ' + cred,
       },
     })
     .then(async function (result) {
@@ -74,19 +73,22 @@ export async function getPurchases(): Promise<PaginatedPurchases | Error> {
     })
 }
 
-export async function getPaginatedPurchases(pageSize: number, pageNumber: number): Promise<PaginatedPurchases | Error> {  
-  const cred = localStorage.getItem("credentials")
+export async function getPaginatedPurchases(
+  pageSize: number,
+  pageNumber: number,
+): Promise<PaginatedPurchases | Error> {
+  const cred = localStorage.getItem('credentials')
 
   return await axios
-    .get<PaginatedPurchases>(API_ADDRESS+'/purchases', {
+    .get<PaginatedPurchases>(API_ADDRESS + '/purchases', {
       headers: {
         Accept: 'application/json',
-        'Authorization': 'Basic ' + cred
+        Authorization: 'Basic ' + cred,
       },
-      params:{
-        'pageSize': pageSize,
-        'pageNumber': pageNumber
-      }
+      params: {
+        pageSize: pageSize,
+        pageNumber: pageNumber,
+      },
     })
     .then(async function (result) {
       if (result.status === 200) {
