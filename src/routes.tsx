@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuthState } from './auth/reduce-context'
+import { useAuthState } from './auth/authContext'
 import { Login } from './pages/Login'
 import { Form } from './pages/Form'
 import { Admin } from './pages/Admin'
 import { NoPage } from './pages/NoPage'
+import { Logout } from './pages/Logout'
 
 interface Props {
   component: ReactNode
@@ -32,6 +33,11 @@ export const routes: AppRouteInterface[] = [
     isPrivate: false,
   },
   {
+    path: '/logout',
+    component: <Logout />,
+    isPrivate: false,
+  },
+  {
     path: '/admin',
     component: <Admin></Admin>,
     isPrivate: true,
@@ -45,10 +51,8 @@ export const routes: AppRouteInterface[] = [
 
 export const AppRoute = ({ component, isPrivate }: Props) => {
   const userDetails = useAuthState()
-  console.log(userDetails)
   if (isPrivate && !Boolean(userDetails.token)) {
     return <Navigate to={{ pathname: '/login' }} />
   }
-  console.log('should be here')
   return component
 }
