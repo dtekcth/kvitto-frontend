@@ -16,6 +16,7 @@ interface Props<Form extends FieldValues> {
   type: HTMLInputTypeAttribute
   error: FieldError | undefined
   register: UseFormRegister<Form>
+  onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 export const InputField = <Form extends FieldValues>({
@@ -25,6 +26,7 @@ export const InputField = <Form extends FieldValues>({
   onChange,
   register,
   error,
+  onKeyPress,
 }: Props<Form>): JSX.Element => {
   // TODO: extract
   const Input = styled.input`
@@ -39,6 +41,7 @@ export const InputField = <Form extends FieldValues>({
       <Label>
         {label}
         <Input
+          onKeyDown={onKeyPress}
           type={type}
           {...register(name, {
             onChange,

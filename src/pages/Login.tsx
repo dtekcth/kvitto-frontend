@@ -16,6 +16,7 @@ export const Login = (): JSX.Element => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
 
     // When the resolver does not cover all fields in OurForm, the resolver will give an error
   } = useForm<LoginForm>({})
@@ -23,6 +24,17 @@ export const Login = (): JSX.Element => {
   const dispatch = useAuthDispatch()
 
   const [authenticated, setAuthenticated] = useState(false)
+  const handleKeyPress = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      const fields = getValues()
+      await handleLogin({
+        username: fields.username,
+        password: fields.password,
+      })
+    }
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('credentials')
@@ -52,6 +64,7 @@ export const Login = (): JSX.Element => {
         name={'username'}
         label={'Username'}
         type={'text'}
+        onKeyPress={handleKeyPress}
         error={errors.username}
         register={register}
       />
@@ -59,6 +72,7 @@ export const Login = (): JSX.Element => {
         name={'password'}
         label={'Password'}
         type={'password'}
+        onKeyPress={handleKeyPress}
         error={errors.password}
         register={register}
       />

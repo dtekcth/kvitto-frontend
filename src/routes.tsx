@@ -51,10 +51,8 @@ export const routes: AppRouteInterface[] = [
 
 export const AppRoute = ({ component, isPrivate }: Props) => {
   const userDetails = useAuthState()
-  console.log(userDetails)
   if (isPrivate && !Boolean(userDetails.token)) {
     return <Navigate to={{ pathname: '/login' }} />
   }
-  console.log('should be here')
   return component
 }
