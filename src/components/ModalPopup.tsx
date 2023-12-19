@@ -2,7 +2,7 @@ import { ModalProps } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 
 interface Props extends ModalProps {
-  title:String
+  title:string
   body:React.ReactNode
   footer:React.ReactNode
 }

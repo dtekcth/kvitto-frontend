@@ -5,6 +5,7 @@ import { getPaginatedPurchases, PurchaseWithId } from '../api/purchases'
 import { useEffect, useState } from 'react'
 import { DropdownOption } from '../components/Dropdown'
 import Select from 'react-select'
+import { AdminModal } from './AdminModal'
 
 export const Admin = (): JSX.Element => {
   const items = []
@@ -13,6 +14,33 @@ export const Admin = (): JSX.Element => {
   const [purchasesLength, setPurchasesLength] = useState<number>(0)
   const [purchasesPerPage, setPurchasesPerPage] = useState<number>(10)
   const [active, setActive] = useState<number>(1)
+
+  //AdminModal constants
+  const initPurchase: PurchaseWithId = {
+    id: -1,
+    description: '',
+    paymentType: '',
+    name: '',
+    phoneNr: '',
+    clearing: '',
+    accountNumber: '',
+    isHandled: false,
+    isApproved: false,
+    crowns: 0,
+    ore: 0,
+    purchaseDate: '',
+    committeeId: 0,
+    budgetPostId: 0,
+    files: []
+  }
+  const [show, setShow] = useState(false);
+  const [modalPurchase, setModalPurchase] = useState<PurchaseWithId>(initPurchase);
+  const handleClose = (): void => {setShow(false)};
+  const handleShow = (purchase:PurchaseWithId): void => {
+    setModalPurchase(purchase)
+    setShow(true)
+
+  }
 
   const numberOnClick = (number: number): void => {
     setActive(number)
@@ -70,7 +98,7 @@ export const Admin = (): JSX.Element => {
           <td>{purchases[index].isHandled.toString()}</td>
           <td>{purchases[index].isApproved.toString()}</td>
           <td>
-            <a href="https://google.se">Clickable</a>
+            <button onClick={() => (handleShow(purchases[index]))}>Open</button>
           </td>
         </tr>,
       )
@@ -155,6 +183,12 @@ export const Admin = (): JSX.Element => {
           Tab content for Contact
         </Tab>
       </Tabs>
+    <AdminModal
+      purchase={modalPurchase}
+      handleClose={handleClose}
+      show={show}
+    />
     </div>
+
   )
 }
