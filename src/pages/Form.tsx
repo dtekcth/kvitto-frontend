@@ -11,7 +11,7 @@ import { Textarea } from '../components/TextareaField'
 import { Committee, getCommittes } from '../api/committes'
 // import { schema } from './validationScheme'
 // import { yupResolver } from '@hookform/resolvers/yup'
-import { Purchase, postPurchases } from '../api/purchases'
+import { FormPurchase, postPurchases } from '../api/purchases'
 import { FileUpload } from '../components/FileUpload'
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
@@ -53,7 +53,7 @@ export const Form = (): JSX.Element => {
   const onSubmit = (formData: OurForm): void => {
     console.log(formData)
     const dateString = formData.purchasedate.toISOString().split('T')[0]
-    const purchase: Purchase = {
+    const purchase: FormPurchase = {
       description: formData.description,
       paymentType: formData.card,
       name: formData.name,
