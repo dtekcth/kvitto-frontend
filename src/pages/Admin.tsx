@@ -1,7 +1,7 @@
 import Pagination from 'react-bootstrap/Pagination'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import { getPaginatedPurchases, PurchaseWithId } from '../api/purchases'
+import { getPaginatedPurchases, ReceivedPurchase } from '../api/purchases'
 import { useEffect, useState } from 'react'
 import { DropdownOption } from '../components/Dropdown'
 import Select from 'react-select'
@@ -9,7 +9,7 @@ import Select from 'react-select'
 export const Admin = (): JSX.Element => {
   const items = []
 
-  const [purchases, setPurchases] = useState<PurchaseWithId[]>([])
+  const [purchases, setPurchases] = useState<ReceivedPurchase[]>([])
   const [purchasesLength, setPurchasesLength] = useState<number>(0)
   const [purchasesPerPage, setPurchasesPerPage] = useState<number>(10)
   const [active, setActive] = useState<number>(1)
@@ -17,13 +17,14 @@ export const Admin = (): JSX.Element => {
   const numberOnClick = (number: number): void => {
     setActive(number)
     getPurchases(purchasesPerPage, number - 1)
+    console.log(purchases)
   }
 
   const getPurchases = (pageSize: number, pageNumber: number): void => {
     void getPaginatedPurchases(pageSize, pageNumber).then(result => {
       if (!(result instanceof Error)) {
-        const temp: PurchaseWithId[] = []
-        result.purchases.forEach((value: PurchaseWithId) => {
+        const temp: ReceivedPurchase[] = []
+        result.purchases.forEach((value: ReceivedPurchase) => {
           temp.push(value)
         })
         setPurchases(temp)
