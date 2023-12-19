@@ -33,28 +33,6 @@ export const Login = (): JSX.Element => {
       console.log(error)
     }
   }
-  /*
-  const onSubmit = (formData: LoginForm): void => {
-    console.log('t')
-    getLogin(formData.username, formData.password)
-      .then(async result => {
-        if (result instanceof Error || result.status !== 200) {
-        } else {
-          console.log('h')
-
-          console.log('a')
-          const encodedStr = Buffer.from(
-            formData.username + ':' + formData.password,
-            'binary',
-          ).toString('base64')
-
-          console.log('setting creds')
-          localStorage.setItem('credentials', encodedStr)
-        }
-      })
-      .catch(async () => {})
-  }
-  */
 
   return (
     <div style={{ margin: 'auto' }}>

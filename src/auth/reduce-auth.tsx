@@ -109,7 +109,7 @@ export async function loginUser(
         loginPayload.name + ':' + loginPayload.password,
         'binary',
       ).toString('base64')
-      localStorage.setItem('credentials', JSON.stringify(encodedStr))
+      localStorage.setItem('credentials', encodedStr)
     }
   } catch (error) {
     dispatch({
