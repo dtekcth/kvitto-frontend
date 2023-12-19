@@ -1,8 +1,7 @@
 import React, { ReactNode, useReducer } from 'react'
-import { AuthAction, AuthReducer, AuthState, initialState } from './reduce-auth'
+import { AuthAction, AuthReducer, AuthState, initialState } from './authReduce'
 
 const AuthStateContext = React.createContext<AuthState>({
-  userDetails: '',
   token: localStorage.getItem('credentials') || '',
   loading: false,
   errorMessage: undefined,
@@ -11,7 +10,6 @@ const AuthDispatchContext =
   React.createContext<React.Dispatch<AuthAction>>(useAuthDispatch)
 
 export function useAuthState() {
-  console.log('create context')
   const context = React.useContext(AuthStateContext)
   if (context === undefined) {
     throw new Error('useAuthState must be used within a AuthProvider')

@@ -2,13 +2,13 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Header } from './components/Header.tsx'
 import { routes, AppRoute, AppRouteInterface } from './routes.tsx'
-import { AuthProvider } from './auth/reduce-context.tsx'
+import { AuthProvider } from './auth/authContext.tsx'
 
 function App(): JSX.Element {
   return (
     <div className="App">
-      <Header />
       <BrowserRouter>
+        <Header />
         <AuthProvider>
           <Routes>
             {routes.map((route: AppRouteInterface) => (

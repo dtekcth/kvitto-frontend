@@ -2,26 +2,24 @@ import { getLogin } from '../api/login'
 import { Buffer } from 'buffer'
 
 export interface AuthState {
-  userDetails: string
   token: string
   loading: boolean
-  errorMessage: string | undefined
+  errorMessage?: string
 }
 
 export interface LoginDetails {
   name: string
   password: string
-  error: string | undefined
+  error?: string
 }
 
 export interface AuthAction {
   type: string
-  payload: LoginDetails | undefined
-  error: string | undefined
+  payload?: LoginDetails
+  error?: string
 }
 
 export const initialState: AuthState = {
-  userDetails: '',
   token: localStorage.getItem('credentials') || '',
   loading: false,
   errorMessage: undefined,
@@ -81,7 +79,6 @@ export const AuthReducer = (
 }
 
 export async function loginUser(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch: React.Dispatch<AuthAction>,
   loginPayload: LoginDetails,
 ) {
@@ -121,7 +118,11 @@ export async function loginUser(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function logout(dispatch: any) {
-  dispatch({ type: 'LOGOUT' })
+export async function logout(dispatch: React.Dispatch<AuthAction>) {
+  dispatch({
+    type: 'LOGOUT',
+    payload: undefined,
+    error: undefined,
+  })
   localStorage.removeItem('credentials')
 }
