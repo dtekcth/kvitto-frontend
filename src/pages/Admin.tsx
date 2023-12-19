@@ -65,8 +65,8 @@ export const Admin = (): JSX.Element => {
           <td>{purchases[index].name}</td>
           <td>{purchases[index].description}</td>
           <td>{purchases[index].crowns},{oreStr}</td>
-          <td>{purchases[index].isHandled}</td>
-          <td>{purchases[index].isApproved}</td>
+          <td>{purchases[index].isHandled.toString()}</td>
+          <td>{purchases[index].isApproved.toString()}</td>
           <td><a href="https://google.se">Clickable</a></td>
         </tr>
       )
