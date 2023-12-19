@@ -61,14 +61,11 @@ export const Admin = (): JSX.Element => {
       }
       shownPurchases.push(
         <tr key={purchases[index].id}>
-          <td>{purchases[index].id}</td>
+          <td>{purchases[index].purchaseDate}</td>
           <td>{purchases[index].name}</td>
-          <td>{purchases[index].description}</td>
           <td>
             {purchases[index].crowns},{oreStr}
           </td>
-          <td>{purchases[index].isHandled.toString()}</td>
-          <td>{purchases[index].isApproved.toString()}</td>
           <td>
             <a href="https://google.se">Clickable</a>
           </td>
@@ -99,22 +96,7 @@ export const Admin = (): JSX.Element => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-          >
-            <Select
-              getOptionLabel={(item: DropdownOption) => item.label}
-              getOptionValue={(item: DropdownOption) => item.value as string}
-              options={pageSizeSelections}
-              defaultValue={pageSizeSelections[1]}
-              onChange={(option: DropdownOption | null) => {
-                if (option != null) {
-                  setPurchasesPerPage(option.value as number)
-                  numberOnClick(1)
-                  getPurchases(option.value as number, 0)
-                }
-              }}
-            />
-            <div>Total number of purchases: {purchasesLength}</div>
-          </div>
+          ></div>
           <div
             style={{
               display: 'flex',
@@ -124,20 +106,51 @@ export const Admin = (): JSX.Element => {
           >
             <div
               style={{
-                width: '50%',
+                display: 'grid',
+                gridTemplateColumns: '1fr',
               }}
             >
-              <Pagination>{items}</Pagination>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Pagination>{items}</Pagination>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  Showing
+                  <Select
+                    getOptionLabel={(item: DropdownOption) => item.label}
+                    getOptionValue={(item: DropdownOption) =>
+                      item.value as string
+                    }
+                    options={pageSizeSelections}
+                    defaultValue={pageSizeSelections[1]}
+                    onChange={(option: DropdownOption | null) => {
+                      if (option != null) {
+                        setPurchasesPerPage(option.value as number)
+                        numberOnClick(1)
+                        getPurchases(option.value as number, 0)
+                      }
+                    }}
+                  />
+                  out of {purchasesLength}
+                </div>
+              </div>
               <div className="table-div">
                 <table>
                   <thead>
                     <tr>
-                      <th>Purchase ID</th>
+                      <th>Purchase Date</th>
                       <th>Name</th>
-                      <th>Purchase Description</th>
                       <th>Cost</th>
-                      <th>Is Handled?</th>
-                      <th>Is Approved?</th>
                       <th>Modal</th>
                     </tr>
                   </thead>
