@@ -15,7 +15,6 @@ export const Admin = (): JSX.Element => {
   const [active, setActive] = useState<number>(1)
 
   const numberOnClick = (number: number): void => {
-    console.log(number)
     setActive(number)
     getPurchases(purchasesPerPage, number - 1)
   }
@@ -27,7 +26,6 @@ export const Admin = (): JSX.Element => {
         result.purchases.forEach((value: PurchaseWithId) => {
           temp.push(value)
         })
-        console.log(result.numberOfPurchases)
         setPurchases(temp)
         setPurchasesLength(result.numberOfPurchases)
       }
@@ -57,11 +55,35 @@ export const Admin = (): JSX.Element => {
   const shownPurchases = []
   for (let index = 0; index <= purchases.length; index++) {
     if (purchases[index] != null) {
+      let oreStr: string = purchases[index].ore.toString()
+      if (purchases[index].ore < 10) {
+        oreStr = '0' + oreStr
+      }
       shownPurchases.push(
-        <div key={purchases[index].id}>{purchases[index].name}</div>,
+        <tr key={purchases[index].id}>
+          <td>{purchases[index].id}</td>
+          <td>{purchases[index].name}</td>
+          <td>{purchases[index].description}</td>
+          <td>
+            {purchases[index].crowns},{oreStr}
+          </td>
+          <td>{purchases[index].isHandled.toString()}</td>
+          <td>{purchases[index].isApproved.toString()}</td>
+          <td>
+            <a href="https://google.se">Clickable</a>
+          </td>
+        </tr>,
       )
     }
   }
+
+  const pageSizeSelections: DropdownOption[] = [
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 25, label: '25' },
+    { value: 100, label: '100' },
+    { value: -1, label: 'All' },
+  ]
 
   return (
     <div>
@@ -81,13 +103,8 @@ export const Admin = (): JSX.Element => {
             <Select
               getOptionLabel={(item: DropdownOption) => item.label}
               getOptionValue={(item: DropdownOption) => item.value as string}
-              options={[
-                { value: 5, label: '5' },
-                { value: 10, label: '10' },
-                { value: 25, label: '25' },
-                { value: 100, label: '100' },
-                { value: -1, label: 'All' },
-              ]}
+              options={pageSizeSelections}
+              defaultValue={pageSizeSelections[1]}
               onChange={(option: DropdownOption | null) => {
                 if (option != null) {
                   setPurchasesPerPage(option.value as number)
@@ -105,9 +122,28 @@ export const Admin = (): JSX.Element => {
               justifyContent: 'center',
             }}
           >
-            <div>
+            <div
+              style={{
+                width: '50%',
+              }}
+            >
               <Pagination>{items}</Pagination>
-              {shownPurchases}
+              <div className="table-div">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Purchase ID</th>
+                      <th>Name</th>
+                      <th>Purchase Description</th>
+                      <th>Cost</th>
+                      <th>Is Handled?</th>
+                      <th>Is Approved?</th>
+                      <th>Modal</th>
+                    </tr>
+                  </thead>
+                  <tbody>{shownPurchases}</tbody>
+                </table>
+              </div>
               <Pagination>{items}</Pagination>
             </div>
           </div>
