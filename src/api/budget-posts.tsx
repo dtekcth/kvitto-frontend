@@ -10,7 +10,7 @@ export interface BudgetPost {
 export async function getBudgetPosts(): Promise<BudgetPost[] | Error> {
   // 👇️ const data: GetUsersResponse
   return await axios
-    .get<BudgetPost[]>(API_ADDRESS+'/budget-posts', {
+    .get<BudgetPost[]>(API_ADDRESS + '/budgetPosts', {
       headers: {
         Accept: 'application/json',
       },

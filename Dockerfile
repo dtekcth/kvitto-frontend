@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 ARG REACT_APP_API_ADDRESS
 
