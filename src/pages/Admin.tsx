@@ -16,8 +16,20 @@ export const Admin = (): JSX.Element => {
   const [active, setActive] = useState<number>(1)
 
   //AdminModal constants
-  const initPurchase: PurchaseWithId = {
+  const initPurchase: ReceivedPurchase = {
     id: -1,
+    committee: {
+      id: -1,
+      name: '',
+      vismaId: -1,
+      active: false
+    },
+    budgetPost: {
+      id: -1,
+      name: '',
+      vismaId: -1,
+    },
+    fileNames: [],
     description: '',
     paymentType: '',
     name: '',
@@ -28,15 +40,12 @@ export const Admin = (): JSX.Element => {
     isApproved: false,
     crowns: 0,
     ore: 0,
-    purchaseDate: '',
-    committeeId: 0,
-    budgetPostId: 0,
-    files: []
+    purchaseDate: ''
   }
   const [show, setShow] = useState(false);
-  const [modalPurchase, setModalPurchase] = useState<PurchaseWithId>(initPurchase);
+  const [modalPurchase, setModalPurchase] = useState<ReceivedPurchase>(initPurchase);
   const handleClose = (): void => {setShow(false)};
-  const handleShow = (purchase:PurchaseWithId): void => {
+  const handleShow = (purchase:ReceivedPurchase): void => {
     setModalPurchase(purchase)
     setShow(true)
 
