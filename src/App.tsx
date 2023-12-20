@@ -1,24 +1,34 @@
 import './App.css'
-import { Form } from './pages/form/Form.tsx'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login } from './pages/Login.tsx';
-import { Header } from './components/Header.tsx';
-import { NoPage } from './pages/NoPage.tsx';
-import { Admin } from './pages/Admin.tsx';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Header } from './components/Header.tsx'
+import { routes, AppRoute, AppRouteInterface } from './routes.tsx'
+import { AuthProvider } from './auth/reduce-context.tsx'
 
 function App(): JSX.Element {
 
   return (
     <div className="App">
-      <Header/>
       <div className='router'>
-        <BrowserRouter>
+      <BrowserRouter>
+      <Header />
+        <AuthProvider>
           <Routes>
-              <Route path={"/"} element={<Form/>}/>
-              <Route path={"/login"} element={<Login/>}/>
-              <Route path={"/admin"} element={<Admin/>}/>
-              <Route path={"*"} element={<NoPage/>}/>
+            {routes.map((route: AppRouteInterface) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  <AppRoute
+                    path={route.path}
+                    component={route.component}
+                    isPrivate={route.isPrivate}
+                  ></AppRoute>
+                }
+              />
+            ))}
           </Routes>
+        </AuthProvider>
+      
         </BrowserRouter>
       </div>
     </div>

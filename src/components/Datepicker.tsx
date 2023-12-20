@@ -21,10 +21,10 @@ interface Props<Form extends FieldValues> {
   label: string
   placeholder?: string
   error: FieldError | undefined
-  control: Control<Form, any>
+  control: Control<Form, unknown>
   onChange: (
     date: Date | null,
-    event: React.SyntheticEvent<any, Event> | undefined,
+    event: React.SyntheticEvent<unknown, Event> | undefined,
   ) => void
   register: UseFormRegister<Form>
 }

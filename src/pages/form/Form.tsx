@@ -13,7 +13,7 @@ import { Committee, getCommittes } from '../../api/committes'
 import { Purchase, postPurchases } from '../../api/purchases'
 import { FileUpload } from '../../components/FileUpload'
 
-import  {Page, FormDiv} from "./styles.ts"
+import { Page, FormDiv } from './styles.ts'
 
 //  npm install @emotion/react @emotion/styled react-hook-form yup @hookform/resolvers @types/react
 // example form type, should replicate the Request-object expected by api
@@ -81,7 +81,7 @@ export const Form = (): JSX.Element => {
     void getCommittes().then(result => {
       if (!(result instanceof Error)) {
         const temp: DropdownOption[] = []
-        result.forEach((value: Committee, number: number) => {
+        result.forEach((value: Committee) => {
           temp.push({ value: value.id, label: value.name })
         })
         setCommittees(temp)
@@ -91,7 +91,7 @@ export const Form = (): JSX.Element => {
     void getBudgetPosts().then(result => {
       if (!(result instanceof Error)) {
         const temp: DropdownOption[] = []
-        result.forEach((value: BudgetPost, number: number) => {
+        result.forEach((value: BudgetPost) => {
           temp.push({ value: value.id, label: value.name })
         })
         setBudgetPost(temp)
@@ -210,7 +210,12 @@ export const Form = (): JSX.Element => {
           }}
         />
 
-        <FileUpload files={uploadedFiles} label={'Upload'} error={undefined} onChange={fileUpload}/>
+        <FileUpload
+          files={uploadedFiles}
+          label={'Upload'}
+          error={undefined}
+          onChange={fileUpload}
+        />
         <button onClick={handleSubmit(onSubmit)}>Submit</button>
       </FormDiv>
     </Page>

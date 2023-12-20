@@ -11,7 +11,7 @@ export interface Committee {
 export async function getCommittes(): Promise<Committee[] | Error> {
   // 👇️ const data: GetUsersResponse
   return await axios
-    .get<Committee[]>(API_ADDRESS+'/committees', {
+    .get<Committee[]>(API_ADDRESS + '/committees', {
       headers: {
         Accept: 'application/json',
       },
@@ -23,7 +23,6 @@ export async function getCommittes(): Promise<Committee[] | Error> {
       return new Error()
     })
     .catch(async function (error) {
-      console.log(error)
       return new Error(error)
     })
 }
