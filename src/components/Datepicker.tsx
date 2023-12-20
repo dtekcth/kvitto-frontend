@@ -10,6 +10,7 @@ import {
 import { ErrorMessage, Label } from './styles'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import './Datepicker.scss'
 
 export interface DropdownOption {
   value: string
@@ -45,6 +46,7 @@ export const Datepicker = <Form extends FieldValues>({
         <>
           <Label>{label}</Label>
           <DatePicker
+            className="datepicker"
             placeholderText={placeholder}
             onChange={(date, event) => {
               onChange(date, event)

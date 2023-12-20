@@ -5,6 +5,7 @@ import {
   FieldPath,
 } from 'react-hook-form'
 import { ErrorMessage, Label } from './styles'
+import './TextareaField.scss'
 
 interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
@@ -26,7 +27,7 @@ export const Textarea = <Form extends FieldValues>({
     <div>
       <Label>
         {label}
-        <textarea {...register(name)}></textarea>
+        <textarea className="input" {...register(name)}></textarea>
         <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>
     </div>

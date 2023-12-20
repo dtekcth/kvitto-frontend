@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { css } from '@emotion/react'
 import {
   UseFormRegister,
   FieldError,
@@ -7,6 +10,8 @@ import {
 import styled from '@emotion/styled'
 import { HTMLInputTypeAttribute } from 'react'
 import { ErrorMessage, Label } from './styles'
+import './InputField.scss'
+import { SerializedStyles } from '@emotion/react'
 
 interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
@@ -16,6 +21,7 @@ interface Props<Form extends FieldValues> {
   type: HTMLInputTypeAttribute
   error: FieldError | undefined
   register: UseFormRegister<Form>
+  css?: SerializedStyles
 }
 
 export const InputField = <Form extends FieldValues>({
@@ -25,6 +31,7 @@ export const InputField = <Form extends FieldValues>({
   onChange,
   register,
   error,
+  css,
 }: Props<Form>): JSX.Element => {
   // TODO: extract
   const Input = styled.input`
@@ -35,10 +42,11 @@ export const InputField = <Form extends FieldValues>({
   `
 
   return (
-    <div>
+    <div css={css}>
       <Label>
         {label}
         <Input
+          className="input"
           type={type}
           {...register(name, {
             onChange,
