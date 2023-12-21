@@ -19,14 +19,17 @@ interface Props<Form extends FieldValues> {
   name: FieldPath<Form>
   label: string
   placeholder?: string | number
-  options: DropdownOption[] | undefined
-  error: FieldError | undefined
+  options?: DropdownOption[]
+  error?: FieldError
+  defaultValue?: DropdownOption
   control: Control<Form, unknown>
-  onChange: (
+  valueChange: (
     newValue: SingleValue<DropdownOption>,
     actionMeta: ActionMeta<DropdownOption>,
   ) => void
   register: UseFormRegister<Form>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any
 }
 
 export const Dropdown = <Form extends FieldValues>({
@@ -34,26 +37,34 @@ export const Dropdown = <Form extends FieldValues>({
   label,
   options,
   control,
-  onChange,
   error,
+  valueChange,
+  defaultValue,
+  ...rest
 }: Props<Form>): JSX.Element => {
   if (options != null) {
     return (
       <Controller
         name={name}
         control={control}
-        render={({}) => {
+        render={({ field: { onChange, value, name, ref } }) => {
           return (
             <>
               <Label>{label}</Label>
 
               <Select
+                {...rest}
                 getOptionLabel={(item: DropdownOption) => item.label}
                 getOptionValue={(item: DropdownOption) => item.value as string}
                 options={options}
-                onChange={(option: DropdownOption | null, actionMeta) => {
-                  onChange(option, actionMeta)
+                value={options.find(c => c.value === value)}
+                onChange={(val, e) => {
+                  val != null && onChange(val.value)
+                  valueChange(val, e)
                 }}
+                defaultValue={defaultValue}
+                name={name}
+                ref={ref}
               />
               <ErrorMessage>{error?.message}</ErrorMessage>
             </>

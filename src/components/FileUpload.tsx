@@ -6,11 +6,16 @@ interface Props {
   label: string
   placeholder?: string | number
   onChange?: (file: File) => void
-  error: FieldError | undefined
+  error?: FieldError
   files: File[]
 }
 
-export const FileUpload = ({ label, onChange, error, files }: Props): JSX.Element => {
+export const FileUpload = ({
+  label,
+  onChange,
+  error,
+  files,
+}: Props): JSX.Element => {
   const fileInput = useRef<HTMLInputElement>(null)
   const selectFile = (): void => {
     if (fileInput.current != null) {
@@ -30,16 +35,21 @@ export const FileUpload = ({ label, onChange, error, files }: Props): JSX.Elemen
     <div key={files.length}>
       <Label>
         {label}
-        <input style={{ "display": "none" }} ref={fileInput} type="file" onChange={fileUpload} />
+        <input
+          style={{ display: 'none' }}
+          ref={fileInput}
+          type="file"
+          onChange={fileUpload}
+        />
         <button onClick={selectFile} className="btn btn-primary">
           Upload
         </button>
       </Label>
       {files.map((item, i) => {
         console.log(files)
-        console.log("lold")
-          return <label key={i}> {item.name} </label>
-})}
+        console.log('lold')
+        return <label key={i}> {item.name} </label>
+      })}
       <ErrorMessage>{error?.message}</ErrorMessage>
     </div>
   )

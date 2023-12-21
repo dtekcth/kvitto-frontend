@@ -162,7 +162,7 @@ export const Form = (): JSX.Element => {
           error={errors.budgetpost}
           control={control}
           register={register}
-          onChange={(option: DropdownOption | null) => {
+          valueChange={(option: DropdownOption | null) => {
             option != null && setValue('budgetpost', option.value as number)
           }}
         />
@@ -205,7 +205,7 @@ export const Form = (): JSX.Element => {
           error={errors.committee}
           control={control}
           register={register}
-          onChange={(option: DropdownOption | null) => {
+          valueChange={(option: DropdownOption | null) => {
             option != null && setValue('committee', option.value as number)
           }}
         />
