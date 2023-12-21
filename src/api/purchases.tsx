@@ -37,7 +37,7 @@ export interface PaginatedPurchases {
 
 export async function postPurchases(
   object: Purchase,
-): Promise<PurchaseWithId | Error> {
+): Promise<ReceivedPurchase | Error> {
   const cred = localStorage.getItem('credentials')
   console.log('Creds: ' + cred)
   return await axios
@@ -49,7 +49,7 @@ export async function postPurchases(
     })
     .then(async function (result) {
       if (result.status === 200) {
-        return result.data as PurchaseWithId
+        return result.data as ReceivedPurchase
       }
       return new Error()
     })

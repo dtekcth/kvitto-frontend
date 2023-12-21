@@ -255,7 +255,6 @@ export const Form = (): JSX.Element => {
                   result.forEach((value: BudgetPost) => {
                     temp.push({ value: value.id, label: value.name })
                   })
-
                   setBudgetPost(temp)
                 }
               }}
