@@ -66,7 +66,6 @@ export const Form = (): JSX.Element => {
   } = useForm<OurForm>({ resolver: yupResolver(schema) })
 
   const onSubmit = async (formData: OurForm) => {
-    console.log(formData)
     const dateString = formData.purchasedate.toISOString().split('T')[0]
     const purchase: Purchase = {
       description: formData.description,
@@ -86,9 +85,7 @@ export const Form = (): JSX.Element => {
     }
     setFiles([])
     const result = await postPurchases(purchase)
-    console.log(result)
     if (!(result instanceof Error)) {
-      console.log('not error')
       setShowForm(false)
       setSubmittedExpense(result)
       if (formData.physical === 1) {
@@ -128,7 +125,6 @@ export const Form = (): JSX.Element => {
 
   const fileUpload = (files: File[]): void => {
     setFiles(files)
-    console.log(files)
   }
 
   const FormDivNoPadding = FormDiv('0px')
@@ -196,7 +192,6 @@ export const Form = (): JSX.Element => {
               label="Which day did you do the purchase?"
               control={control}
               onChange={date => {
-                console.log(date?.toJSON())
                 date != null && setValue('purchasedate', date)
               }}
               register={register}
@@ -251,7 +246,6 @@ export const Form = (): JSX.Element => {
               valueChange={async (option: DropdownOption | null) => {
                 option != null && setValue('committee', option.value as number)
                 const result = await getBudgetPostsById(option?.value as number)
-                console.log(result)
                 if (!(result instanceof Error)) {
                   const temp: DropdownOption[] = []
                   result.forEach((value: BudgetPost) => {

@@ -41,8 +41,6 @@ export const FileUpload = ({
     forceUpdate()
   }
 
-  console.log(uploadedFiles)
-
   const openFile = (file: File) => {
     const fileURL = URL.createObjectURL(file)
     const pdfWindow = window.open()
@@ -68,7 +66,6 @@ export const FileUpload = ({
       {uploadedFiles.length > 0 ? 'Uploaded files' : ''}
       <FilesDiv>
         {uploadedFiles.map((item, i) => {
-          console.log(item)
           return (
             <FileDiv key={i}>
               <FontAwesomeIcon icon={faFile} />
@@ -82,7 +79,6 @@ export const FileUpload = ({
               </FileText>
               <FontAwesomeIcon
                 onClick={() => {
-                  console.log('click')
                   const temp = uploadedFiles
                   delete temp[i]
                   const temp2: File[] = []
