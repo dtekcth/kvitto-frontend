@@ -1,14 +1,14 @@
 import { FieldError } from 'react-hook-form'
-import { useRef } from 'react'
+import { useReducer, useRef, useState } from 'react'
 import { ErrorMessage, Label } from './styles'
 import { FileDiv, FileText, FilesDiv } from './FileUploadStyles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { faFile, faX } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
   label: string
   placeholder?: string | number
-  onChange?: (file: File) => void
+  onChange?: (files: File[]) => void
   error: FieldError | undefined
   files: File[]
 }
@@ -26,14 +26,22 @@ export const FileUpload = ({
     }
   }
 
+  const [uploadedFiles, setUploadedFiles] = useState(files)
+  const [, forceUpdate] = useReducer(x => x + 1, 0)
+
   const fileUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { files } = event.target
     const selectedFiles = files as FileList
-
+    const temp = uploadedFiles
+    temp.push(selectedFiles?.[0])
+    setUploadedFiles(temp)
     if (onChange !== undefined) {
-      onChange(selectedFiles?.[0])
+      onChange(temp)
     }
+    forceUpdate()
   }
+
+  console.log(uploadedFiles)
 
   const openFile = (file: File) => {
     const fileURL = URL.createObjectURL(file)
@@ -44,7 +52,7 @@ export const FileUpload = ({
   }
 
   return (
-    <div key={files.length}>
+    <div key={uploadedFiles.length}>
       <Label>
         {label}
         <input
@@ -57,9 +65,9 @@ export const FileUpload = ({
           Upload
         </button>
       </Label>
-      {files.length > 0 ? 'Uploaded files' : ''}
+      {uploadedFiles.length > 0 ? 'Uploaded files' : ''}
       <FilesDiv>
-        {files.map((item, i) => {
+        {uploadedFiles.map((item, i) => {
           console.log(item)
           return (
             <FileDiv key={i}>
@@ -72,6 +80,20 @@ export const FileUpload = ({
                 {' '}
                 {item.name}{' '}
               </FileText>
+              <FontAwesomeIcon
+                onClick={() => {
+                  console.log('click')
+                  const temp = uploadedFiles
+                  delete temp[i]
+                  const temp2: File[] = []
+                  temp.map(value => {
+                    value != null && temp2.push(value)
+                  })
+                  setUploadedFiles(temp2)
+                  forceUpdate()
+                }}
+                icon={faX}
+              />
             </FileDiv>
           )
         })}

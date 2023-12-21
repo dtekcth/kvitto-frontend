@@ -126,13 +126,9 @@ export const Form = (): JSX.Element => {
     { value: 'division', label: 'Divison card' },
   ]
 
-  const fileUpload = (file: File): void => {
-    const temp = []
-    uploadedFiles.forEach(value => {
-      temp.push(value)
-    })
-    temp.push(file)
-    setFiles(temp)
+  const fileUpload = (files: File[]): void => {
+    setFiles(files)
+    console.log(files)
   }
 
   const FormDivNoPadding = FormDiv('0px')
