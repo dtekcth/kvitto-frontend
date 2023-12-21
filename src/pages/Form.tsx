@@ -10,7 +10,11 @@ import { Textarea } from '../components/TextareaField.tsx'
 import { Committee, getCommittes } from '../api/committes.tsx'
 import { schema } from './validationScheme'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Purchase, PurchaseWithId, postPurchases } from '../api/purchases.tsx'
+import {
+  FormPurchase,
+  ReceivedPurchase,
+  postPurchases,
+} from '../api/purchases.tsx'
 import { FileUpload } from '../components/FileUpload.tsx'
 
 import {
@@ -67,7 +71,7 @@ export const Form = (): JSX.Element => {
 
   const onSubmit = async (formData: OurForm) => {
     const dateString = formData.purchasedate.toISOString().split('T')[0]
-    const purchase: Purchase = {
+    const purchase: FormPurchase = {
       description: formData.description,
       paymentType: formData.card,
       name: formData.name,
@@ -100,7 +104,7 @@ export const Form = (): JSX.Element => {
   const [uploadedFiles, setFiles] = useState<File[]>([])
   const [showForm, setShowForm] = useState(true)
   const [submittedExpense, setSubmittedExpense] =
-    useState<PurchaseWithId | null>(null)
+    useState<ReceivedPurchase | null>(null)
   const [physical, setPhysical] = useState(false)
 
   useEffect(() => {

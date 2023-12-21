@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form'
 import { InputField } from '../components/InputField'
 
-import { LoginDetails, loginUser } from '../auth/reduce-auth.tsx'
-import { useAuthDispatch } from '../auth/reduce-context.tsx'
+import { LoginDetails, loginUser } from '../auth/authReduce.tsx'
+import { useAuthDispatch } from '../auth/authContext.tsx'
+import { Navigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 export interface LoginForm {
   username: string
@@ -14,21 +16,41 @@ export const Login = (): JSX.Element => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
 
     // When the resolver does not cover all fields in OurForm, the resolver will give an error
   } = useForm<LoginForm>({})
 
   const dispatch = useAuthDispatch()
 
+  const [authenticated, setAuthenticated] = useState(false)
+  const handleKeyPress = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      const fields = getValues()
+      await handleLogin({
+        username: fields.username,
+        password: fields.password,
+      })
+    }
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('credentials')
+    if (token) {
+      setAuthenticated(true)
+    }
+  }, [])
+
   const handleLogin = async (formData: LoginForm) => {
     const payload: LoginDetails = {
       name: formData.username,
       password: formData.password,
-      error: undefined,
     }
     try {
-      const response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
-      console.log(response)
+      await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
+      setAuthenticated(true)
     } catch (error) {
       console.log(error)
     }
@@ -36,10 +58,13 @@ export const Login = (): JSX.Element => {
 
   return (
     <div style={{ margin: 'auto' }}>
+      {authenticated ? <Navigate to="/admin" /> : null}
+
       <InputField
         name={'username'}
         label={'Username'}
         type={'text'}
+        onKeyPress={handleKeyPress}
         error={errors.username}
         register={register}
       />
@@ -47,6 +72,7 @@ export const Login = (): JSX.Element => {
         name={'password'}
         label={'Password'}
         type={'password'}
+        onKeyPress={handleKeyPress}
         error={errors.password}
         register={register}
       />

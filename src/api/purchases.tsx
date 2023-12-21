@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { API_ADDRESS } from '../Variables'
+import { Committee } from './committes'
+import { BudgetPost } from './budget-posts'
 
 export interface Purchase {
   description: string
@@ -13,18 +15,24 @@ export interface Purchase {
   crowns: number
   ore: number
   purchaseDate: string
+}
+
+export interface FormPurchase extends Purchase {
   committeeId: number
   budgetPostId: number
   files: File[]
 }
 
-export interface PurchaseWithId extends Purchase {
+export interface ReceivedPurchase extends Purchase {
   id: number
+  committee: Committee
+  budgetPost: BudgetPost
+  fileNames: string[]
 }
 
 export interface PaginatedPurchases {
   numberOfPurchases: number
-  purchases: PurchaseWithId[]
+  purchases: ReceivedPurchase[]
 }
 
 export async function postPurchases(

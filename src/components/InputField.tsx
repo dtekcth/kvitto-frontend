@@ -20,6 +20,7 @@ interface Props<Form extends FieldValues> {
   error: FieldError | undefined
   register: UseFormRegister<Form>
   css?: SerializedStyles
+  onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 export const InputField = <Form extends FieldValues>({
@@ -30,6 +31,7 @@ export const InputField = <Form extends FieldValues>({
   register,
   error,
   css,
+  onKeyPress,
 }: Props<Form>): JSX.Element => {
   // TODO: extract
 
@@ -39,6 +41,7 @@ export const InputField = <Form extends FieldValues>({
         {label}
         <input
           css={inputCSS(error)}
+          onKeyDown={onKeyPress}
           className="input"
           type={type}
           {...register(name, {
