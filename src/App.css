@@ -3,6 +3,10 @@
   height: 100%;
 }
 
+.router {
+  height: 100%;
+}
+
 .table-div td,
 th {
   border: 1px solid #dddddd;

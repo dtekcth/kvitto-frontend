@@ -1,4 +1,6 @@
-import styling from './styling/header.module.css'
+import LogoSVG from './Datalogga.svg'
+import { AdminButton, HeaderDiv, Logo, TitleH1 } from './HeaderStyles'
+
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -28,12 +30,15 @@ export const Header = (): JSX.Element => {
   }
 
   return (
-    <div className={styling.header}>
-      <h1 className={styling.title}>Utlägg</h1>
+    <HeaderDiv>
+      <TitleH1>
+        <Logo src={LogoSVG}></Logo>
+        <div>Utlägg</div>
+      </TitleH1>
 
-      <button onClick={onClick} className={styling.adminbutton}>
+      <AdminButton onClick={onClick} className="btn btn-primary">
         {buttonText}
-      </button>
-    </div>
+      </AdminButton>
+    </HeaderDiv>
   )
 }

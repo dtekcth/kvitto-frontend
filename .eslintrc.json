@@ -18,6 +18,7 @@
     "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/array-callback-return": "off",
-    "@typescript-eslint/no-confusing-void-expression": "off"
+    "@typescript-eslint/no-confusing-void-expression": "off",
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }]
   }
 }
