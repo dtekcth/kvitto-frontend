@@ -1,12 +1,14 @@
-import styling from './styling/header.module.css'
-  
+import LogoSVG from './Datalogga.svg'
+import { AdminButton, HeaderDiv, Logo, TitleH1 } from './HeaderStyles'
+
 export const Header = (): JSX.Element => {
-    
   return (
-    <div className={styling.header}>
-      <h1 className={styling.title}>Utlägg</h1>
-      
-      <button className={styling.adminbutton}>Admin</button>
-    </div>
+    <HeaderDiv>
+      <TitleH1>
+        <Logo src={LogoSVG}></Logo>
+        <div>Utlägg</div>
+      </TitleH1>
+      <AdminButton className="btn btn-primary">Admin</AdminButton>
+    </HeaderDiv>
   )
 }

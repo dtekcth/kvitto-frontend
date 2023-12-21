@@ -1,17 +1,15 @@
 /** @jsxImportSource @emotion/react */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { css } from '@emotion/react'
+
 import {
   UseFormRegister,
   FieldError,
   FieldValues,
   FieldPath,
 } from 'react-hook-form'
-import styled from '@emotion/styled'
 import { HTMLInputTypeAttribute } from 'react'
 import { ErrorMessage, Label } from './styles'
-import './InputField.scss'
 import { SerializedStyles } from '@emotion/react'
+import { inputCSS } from './InputFieldStyles'
 
 interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
@@ -34,24 +32,19 @@ export const InputField = <Form extends FieldValues>({
   css,
 }: Props<Form>): JSX.Element => {
   // TODO: extract
-  const Input = styled.input`
-    ${error != null &&
-    `
-  border-color: #fa6607;
-  `}
-  `
 
   return (
     <div css={css}>
       <Label>
         {label}
-        <Input
+        <input
+          css={inputCSS(error)}
           className="input"
           type={type}
           {...register(name, {
             onChange,
           })}
-        ></Input>
+        ></input>
         <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>
     </div>

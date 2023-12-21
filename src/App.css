@@ -4,11 +4,8 @@
 }
 
 .router {
-  height: -moz-calc(100% - 60px); /* Firefox */
-  height: -webkit-calc(100% - 60px); /* Chrome, Safari */
-  height: calc(100% - 60px); /* IE9+ and future browsers */
+  height: 100%;
 }
-
 
 .table-div td,
 th {
