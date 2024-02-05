@@ -26,3 +26,26 @@ export async function getBudgetPosts(): Promise<BudgetPost[] | Error> {
       return new Error(error)
     })
 }
+
+export async function getBudgetPostsById(
+  committeeId: number,
+): Promise<BudgetPost[] | Error> {
+  // 👇️ const data: GetUsersResponse
+  return await axios
+    .get<BudgetPost[]>(API_ADDRESS + '/budgetPosts', {
+      headers: {
+        Accept: 'application/json',
+      },
+      params: { committeeId },
+    })
+    .then(async function (result) {
+      if (result.status === 200) {
+        return result.data
+      }
+      return new Error()
+    })
+    .catch(async function (error) {
+      console.log(error)
+      return new Error(error)
+    })
+}

@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import {
   UseFormRegister,
   FieldError,
@@ -9,6 +11,8 @@ import {
 // import styled from '@emotion/styled'
 import { ErrorMessage, Label } from './styles'
 import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { datepicker } from './DatepickerStyles'
 
 export interface DropdownOption {
   value: string
@@ -21,6 +25,7 @@ interface Props<Form extends FieldValues> {
   placeholder?: string
   error?: FieldError
   control: Control<Form, unknown>
+  excludeFuture?: boolean
   onChange: (
     date: Date | null,
     event: React.SyntheticEvent<unknown, Event> | undefined,
@@ -35,6 +40,7 @@ export const Datepicker = <Form extends FieldValues>({
   control,
   onChange,
   error,
+  excludeFuture = false,
 }: Props<Form>): JSX.Element => {
   return (
     <Controller
@@ -44,6 +50,7 @@ export const Datepicker = <Form extends FieldValues>({
         <>
           <Label>{label}</Label>
           <DatePicker
+            css={datepicker}
             placeholderText={placeholder}
             onChange={(date, event) => {
               onChange(date, event)
@@ -52,6 +59,12 @@ export const Datepicker = <Form extends FieldValues>({
             dateFormat="dd/MM - yyyy"
             calendarStartDay={1}
             shouldCloseOnSelect={true}
+            filterDate={date => {
+              if (excludeFuture) {
+                return new Date() > date
+              }
+              return true
+            }}
           />
           <ErrorMessage>{error?.message}</ErrorMessage>
         </>

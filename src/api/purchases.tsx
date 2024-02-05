@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { API_ADDRESS } from '../Variables'
 import { Committee } from './committes'
 import { BudgetPost } from './budget-posts'
@@ -62,7 +62,7 @@ export async function putPurchases(
 
 export async function postPurchases(
   object: Purchase,
-): Promise<AxiosResponse | Error> {
+): Promise<ReceivedPurchase | Error> {
   const cred = localStorage.getItem('credentials')
   console.log('Creds: ' + cred)
   return await axios
@@ -74,7 +74,7 @@ export async function postPurchases(
     })
     .then(async function (result) {
       if (result.status === 200) {
-        return result.data
+        return result.data as ReceivedPurchase
       }
       return new Error()
     })

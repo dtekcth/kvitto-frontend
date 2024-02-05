@@ -6,6 +6,7 @@ import {
 } from 'react-hook-form'
 import styled from '@emotion/styled'
 import { ErrorMessage, Label } from './styles'
+import { OptionLabel } from './RadioButtonStyles'
 
 export interface RadioButtonOption {
   value: string | number
@@ -37,10 +38,10 @@ export const RadioButton = <Form extends FieldValues>({
       <Label>
         {label}
         {options.map((item, i) => (
-          <label key={i}>
+          <OptionLabel key={i}>
             <Input type="radio" value={item.value} {...register(name)} />
             {item.label}
-          </label>
+          </OptionLabel>
         ))}
         <ErrorMessage>{error?.message}</ErrorMessage>
       </Label>

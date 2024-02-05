@@ -7,26 +7,28 @@ import { AuthProvider } from './auth/authContext.tsx'
 function App(): JSX.Element {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header />
-        <AuthProvider>
-          <Routes>
-            {routes.map((route: AppRouteInterface) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  <AppRoute
-                    path={route.path}
-                    component={route.component}
-                    isPrivate={route.isPrivate}
-                  ></AppRoute>
-                }
-              />
-            ))}
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
+      <div className="router">
+        <BrowserRouter>
+          <Header />
+          <AuthProvider>
+            <Routes>
+              {routes.map((route: AppRouteInterface) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={
+                    <AppRoute
+                      path={route.path}
+                      component={route.component}
+                      isPrivate={route.isPrivate}
+                    ></AppRoute>
+                  }
+                />
+              ))}
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </div>
     </div>
   )
 }
