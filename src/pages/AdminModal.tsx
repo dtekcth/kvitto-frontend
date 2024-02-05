@@ -12,7 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { Datepicker } from '../components/Datepicker'
 import { Textarea } from '../components/TextareaField'
 import { Committee, getCommittes } from '../api/committes'
-import { FormPurchase, postPurchases } from '../api/purchases'
+import { putPurchases } from '../api/purchases'
 //import { FileUpload } from '../components/FileUpload'
 
 interface Props {
@@ -56,8 +56,6 @@ export const AdminModal = ({
       label: purchase.committee.name,
     },
   }
-
-  console.log(new Date(purchase.purchaseDate.split('T')[0]))
 
   interface OurForm {
     name: string
@@ -109,7 +107,14 @@ export const AdminModal = ({
 
     const committeeId = formData.committee.value as number
     const budgetPostId = formData.budgetpost.value as number
-    const purchase: FormPurchase = {
+    if (!committees || !budgetposts) {
+      return
+    }
+    const committee = committees.filter(value => value.id === committeeId)[0]
+    const budgetPost = budgetposts.filter(value => value.id === budgetPostId)[0]
+    console.log(committee, budgetPost)
+    const p: ReceivedPurchase = {
+      id: purchase.id,
       description: formData.description,
       paymentType: formData.card,
       name: formData.name,
@@ -121,12 +126,35 @@ export const AdminModal = ({
       crowns: formData.crowns,
       ore: formData.ore,
       purchaseDate: dateString,
-      committeeId: committeeId,
-      budgetPostId: budgetPostId,
-      files: uploadedFiles,
+      submitDate: purchase.submitDate,
+      committee: committee,
+      budgetPost: budgetPost,
+      receiptPaths: purchase.receiptPaths,
     }
-    setFiles([])
-    console.log(postPurchases(purchase))
+    //setFiles([])
+    console.log(putPurchases(p))
+  }
+
+  const budgetPostOptions = (): DropdownOption[] => {
+    const temp: DropdownOption[] = []
+    if (!budgetposts) {
+      return temp
+    }
+    budgetposts.forEach((value: BudgetPost) => {
+      temp.push({ value: value.id, label: value.name })
+    })
+    return temp
+  }
+
+  const committeeOptions = (): DropdownOption[] => {
+    const temp: DropdownOption[] = []
+    if (!committees) {
+      return temp
+    }
+    committees.forEach((value: BudgetPost) => {
+      temp.push({ value: value.id, label: value.name })
+    })
+    return temp
   }
 
   const cardOptions: RadioButtonOption[] = [
@@ -135,28 +163,20 @@ export const AdminModal = ({
     { value: 'division', label: 'Divison card' },
   ]
 
-  const [budgetpostsNames, setBudgetPost] = useState<DropdownOption[]>()
-  const [committees, setCommittees] = useState<DropdownOption[]>()
-  const [uploadedFiles, setFiles] = useState<File[]>([])
+  const [budgetposts, setBudgetPost] = useState<BudgetPost[]>()
+  const [committees, setCommittees] = useState<Committee[]>()
+  //const [uploadedFiles, setFiles] = useState<File[]>([])
 
   useEffect(() => {
     void getCommittes().then(result => {
       if (!(result instanceof Error)) {
-        const temp: DropdownOption[] = []
-        result.forEach((value: Committee) => {
-          temp.push({ value: value.id, label: value.name })
-        })
-        setCommittees(temp)
+        setCommittees(result)
       }
     })
 
     void getBudgetPosts().then(result => {
       if (!(result instanceof Error)) {
-        const temp: DropdownOption[] = []
-        result.forEach((value: BudgetPost) => {
-          temp.push({ value: value.id, label: value.name })
-        })
-        setBudgetPost(temp)
+        setBudgetPost(result)
       }
     })
   }, [])
@@ -265,7 +285,7 @@ export const AdminModal = ({
           <Dropdown
             name="budgetpost"
             label="Budgetpost"
-            options={budgetpostsNames}
+            options={budgetPostOptions()}
             error={undefined}
             control={control}
             register={register}
@@ -303,7 +323,7 @@ export const AdminModal = ({
           <Dropdown
             name="committee"
             label="Comittees"
-            options={committees}
+            options={committeeOptions()}
             error={undefined}
             control={control}
             register={register}

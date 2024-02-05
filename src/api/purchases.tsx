@@ -42,7 +42,7 @@ export async function putPurchases(
   const cred = localStorage.getItem('credentials')
   console.log('Creds: ' + cred)
   return await axios
-    .put(API_ADDRESS + '/purchases', object, {
+    .put(API_ADDRESS + '/purchases/' + object.id, object, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: 'Basic ' + cred,
