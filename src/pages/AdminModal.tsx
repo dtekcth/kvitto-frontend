@@ -28,9 +28,21 @@ export const AdminModal = ({
   updatePurchase,
   show,
 }: Props): JSX.Element => {
-  const toggleHandled = () => {}
+  const toggleHandled = () => {
+    const p = purchase
+    p.isHandled = !p.isHandled
+    putPurchases(p).then(() => {
+      updatePurchase(p)
+    })
+  }
 
-  const toggleApproved = () => {}
+  const toggleApproved = () => {
+    const p = purchase
+    p.isApproved = !p.isApproved
+    putPurchases(p).then(() => {
+      updatePurchase(p)
+    })
+  }
 
   //Edit mode of modal--------------------------
   const [editState, setEditState] = useState(false)
