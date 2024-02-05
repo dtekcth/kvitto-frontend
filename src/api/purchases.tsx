@@ -27,7 +27,8 @@ export interface ReceivedPurchase extends Purchase {
   id: number
   committee: Committee
   budgetPost: BudgetPost
-  fileNames: string[]
+  receiptPaths: string[]
+  submitDate: string
 }
 
 export interface PaginatedPurchases {

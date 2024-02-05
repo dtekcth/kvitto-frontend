@@ -29,7 +29,7 @@ export const Admin = (): JSX.Element => {
       name: '',
       vismaId: -1,
     },
-    fileNames: [],
+    receiptPaths: [],
     description: '',
     paymentType: '',
     name: '',
@@ -40,7 +40,8 @@ export const Admin = (): JSX.Element => {
     isApproved: false,
     crowns: 0,
     ore: 0,
-    purchaseDate: ''
+    purchaseDate: '',
+    submitDate: ''
   }
   const [show, setShow] = useState(false);
   const [modalPurchase, setModalPurchase] = useState<ReceivedPurchase>(initPurchase);
