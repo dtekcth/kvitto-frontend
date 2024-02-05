@@ -18,12 +18,14 @@ import { putPurchases } from '../api/purchases'
 interface Props {
   purchase: ReceivedPurchase
   handleClose: () => void
+  updatePurchase: (p: ReceivedPurchase) => void
   show: boolean
 }
 
 export const AdminModal = ({
   purchase,
   handleClose,
+  updatePurchase,
   show,
 }: Props): JSX.Element => {
   const toggleHandled = () => {}
@@ -132,7 +134,10 @@ export const AdminModal = ({
       receiptPaths: purchase.receiptPaths,
     }
     //setFiles([])
-    console.log(putPurchases(p))
+    putPurchases(p).then(() => {
+      updatePurchase(p)
+      localClose()
+    })
   }
 
   const budgetPostOptions = (): DropdownOption[] => {
@@ -372,7 +377,7 @@ export const AdminModal = ({
           <Button variant="secondary" onClick={localClose}>
             Close
           </Button>
-          <Button variant="secondary" onClick={localClose}>
+          <Button variant="secondary" onClick={handleSubmit(onUpdate)}>
             Update
           </Button>
         </div>

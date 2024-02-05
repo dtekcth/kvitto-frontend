@@ -22,7 +22,7 @@ export const Admin = (): JSX.Element => {
       id: -1,
       name: '',
       vismaId: -1,
-      active: false
+      active: false,
     },
     budgetPost: {
       id: -1,
@@ -41,15 +41,27 @@ export const Admin = (): JSX.Element => {
     crowns: 0,
     ore: 0,
     purchaseDate: '',
-    submitDate: ''
+    submitDate: '',
   }
-  const [show, setShow] = useState(false);
-  const [modalPurchase, setModalPurchase] = useState<ReceivedPurchase>(initPurchase);
-  const handleClose = (): void => {setShow(false)};
-  const handleShow = (purchase:ReceivedPurchase): void => {
+  const [show, setShow] = useState(false)
+  const [modalPurchase, setModalPurchase] =
+    useState<ReceivedPurchase>(initPurchase)
+  const handleClose = (): void => {
+    setShow(false)
+  }
+  const handleShow = (purchase: ReceivedPurchase): void => {
     setModalPurchase(purchase)
     setShow(true)
-
+  }
+  const updatePurchase = (purchase: ReceivedPurchase): void => {
+    setPurchases(
+      purchases.map(p => {
+        if (p.id === purchase.id) {
+          return purchase
+        }
+        return p
+      }),
+    )
   }
 
   const numberOnClick = (number: number): void => {
@@ -106,7 +118,7 @@ export const Admin = (): JSX.Element => {
             {purchases[index].crowns},{oreStr}
           </td>
           <td>
-            <button onClick={() => (handleShow(purchases[index]))}>Open</button>
+            <button onClick={() => handleShow(purchases[index])}>Open</button>
           </td>
         </tr>,
       )
@@ -207,12 +219,12 @@ export const Admin = (): JSX.Element => {
           Tab content for Contact
         </Tab>
       </Tabs>
-    <AdminModal
-      purchase={modalPurchase}
-      handleClose={handleClose}
-      show={show}
-    />
+      <AdminModal
+        purchase={modalPurchase}
+        handleClose={handleClose}
+        updatePurchase={updatePurchase}
+        show={show}
+      />
     </div>
-
   )
 }
