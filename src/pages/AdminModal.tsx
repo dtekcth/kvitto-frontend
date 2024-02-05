@@ -209,6 +209,7 @@ export const AdminModal = ({
   //A local version of close function -----------
 
   const localClose = () => {
+    reset({ ...defaultValues })
     handleClose()
     setEditState(false)
   }
@@ -251,7 +252,6 @@ export const AdminModal = ({
             name="name"
             type="text"
             label="Name"
-            defaultValue={purchase.name}
             register={register}
             error={errors.name}
           />
