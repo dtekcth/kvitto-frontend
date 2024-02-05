@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { API_ADDRESS } from '../Variables'
 import { Committee } from './committes'
 import { BudgetPost } from './budget-posts'
