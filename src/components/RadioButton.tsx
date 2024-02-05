@@ -17,8 +17,8 @@ interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
   label: string
   placeholder?: string | number
-  options: RadioButtonOption[] | undefined
-  error: FieldError | undefined
+  options?: RadioButtonOption[]
+  error?: FieldError
   register: UseFormRegister<Form>
 }
 

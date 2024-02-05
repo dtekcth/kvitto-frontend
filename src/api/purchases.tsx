@@ -27,12 +27,37 @@ export interface ReceivedPurchase extends Purchase {
   id: number
   committee: Committee
   budgetPost: BudgetPost
-  fileNames: string[]
+  receiptPaths: string[]
+  submitDate: string
 }
 
 export interface PaginatedPurchases {
   numberOfPurchases: number
   purchases: ReceivedPurchase[]
+}
+
+export async function putPurchases(
+  object: ReceivedPurchase,
+): Promise<AxiosResponse | Error> {
+  const cred = localStorage.getItem('credentials')
+  console.log('Creds: ' + cred)
+  return await axios
+    .put(API_ADDRESS + '/purchases/' + object.id, object, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Basic ' + cred,
+      },
+    })
+    .then(async function (result) {
+      if (result.status === 200) {
+        return result.data
+      }
+      return new Error()
+    })
+    .catch(async function (error) {
+      // console.log(error)
+      return new Error(error)
+    })
 }
 
 export async function postPurchases(

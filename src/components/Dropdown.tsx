@@ -19,8 +19,9 @@ interface Props<Form extends FieldValues> {
   name: FieldPath<Form>
   label: string
   placeholder?: string | number
-  options: DropdownOption[] | undefined
-  error: FieldError | undefined
+  options?: DropdownOption[]
+  error?: FieldError
+  defaultValue?: DropdownOption
   control: Control<Form, unknown>
   valueChange: (
     newValue: SingleValue<DropdownOption>,
@@ -38,6 +39,7 @@ export const Dropdown = <Form extends FieldValues>({
   control,
   error,
   valueChange,
+  defaultValue,
   ...rest
 }: Props<Form>): JSX.Element => {
   if (options != null) {
@@ -60,6 +62,7 @@ export const Dropdown = <Form extends FieldValues>({
                   val != null && onChange(val.value)
                   valueChange(val, e)
                 }}
+                defaultValue={defaultValue}
                 name={name}
                 ref={ref}
               />

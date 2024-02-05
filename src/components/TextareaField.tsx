@@ -13,7 +13,7 @@ interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
   label: string
   placeholder?: string | number
-  error: FieldError | undefined
+  error?: FieldError
   register: UseFormRegister<Form>
 }
 

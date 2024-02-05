@@ -23,7 +23,7 @@ interface Props<Form extends FieldValues> {
   name: FieldPath<Form>
   label: string
   placeholder?: string
-  error: FieldError | undefined
+  error?: FieldError
   control: Control<Form, unknown>
   excludeFuture?: boolean
   onChange: (

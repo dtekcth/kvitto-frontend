@@ -17,10 +17,11 @@ interface Props<Form extends FieldValues> {
   placeholder?: string | number
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   type: HTMLInputTypeAttribute
-  error: FieldError | undefined
+  error?: FieldError
   register: UseFormRegister<Form>
   css?: SerializedStyles
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
+  defaultValue?: string
 }
 
 export const InputField = <Form extends FieldValues>({
