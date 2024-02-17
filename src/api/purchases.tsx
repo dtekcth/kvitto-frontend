@@ -110,13 +110,13 @@ export async function getPaginatedPurchases(
   pageSize: number,
   pageNumber: number,
 ): Promise<PaginatedPurchases | Error> {
-  const cred = localStorage.getItem('credentials')
+  const cred = localStorage.getItem('jwttoken')
 
   return await axios
     .get<PaginatedPurchases>(API_ADDRESS + '/purchases', {
       headers: {
         Accept: 'application/json',
-        Authorization: 'Basic ' + cred,
+        Authorization: 'Bearer ' + cred,
       },
       params: {
         pageSize: pageSize,
