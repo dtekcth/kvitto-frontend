@@ -3,9 +3,17 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { getPaginatedPurchases, ReceivedPurchase } from '../api/purchases'
 import { useEffect, useState } from 'react'
-import { DropdownOption } from '../components/Dropdown'
+import { Dropdown, DropdownOption } from '../components/Dropdown'
 import Select from 'react-select'
 import { AdminModal } from './AdminModal'
+import { addUser } from '../api/users'
+import { InputField } from '../components/InputField'
+import { useForm } from 'react-hook-form'
+
+interface AddUser {
+  email: string
+  role: number
+}
 
 export const Admin = (): JSX.Element => {
   const items = []
@@ -14,6 +22,19 @@ export const Admin = (): JSX.Element => {
   const [purchasesLength, setPurchasesLength] = useState<number>(0)
   const [purchasesPerPage, setPurchasesPerPage] = useState<number>(10)
   const [active, setActive] = useState<number>(1)
+
+  const {
+    register,
+    control,
+    setValue,
+    handleSubmit,
+
+    // When the resolver does not cover all fields in OurForm, the resolver will give an error
+  } = useForm<AddUser>()
+
+  const onSubmit = async (formData: AddUser) => {
+    await addUser(formData.email, formData.role)
+  }
 
   //AdminModal constants
   const initPurchase: ReceivedPurchase = {
@@ -133,6 +154,13 @@ export const Admin = (): JSX.Element => {
     { value: -1, label: 'All' },
   ]
 
+  const roleOptions: DropdownOption[] = [
+    { label: 'Admin', value: 1 },
+    { label: 'Trasurer', value: 2 },
+    { label: 'Regular', value: 3 },
+    { label: 'Auditer', value: 4 },
+  ]
+
   return (
     <div>
       <Tabs
@@ -213,6 +241,23 @@ export const Admin = (): JSX.Element => {
           </div>
         </Tab>
         <Tab eventKey="profile" title="Profile">
+          <InputField
+            name="email"
+            type="text"
+            label="Email"
+            register={register}
+          />
+          <Dropdown
+            name="role"
+            label="Choose a role"
+            options={roleOptions}
+            control={control}
+            register={register}
+            valueChange={(option: DropdownOption | null) => {
+              option != null && setValue('role', option.value as number)
+            }}
+          ></Dropdown>
+          <button onClick={handleSubmit(onSubmit)}>Add user</button>
           Tab content for Profile
         </Tab>
         <Tab eventKey="contact" title="Contact" disabled>

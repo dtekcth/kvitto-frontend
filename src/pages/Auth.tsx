@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setIsAuth, unsetIsAuth } from '../store/store'
@@ -7,9 +7,18 @@ import { getUser } from '../api/login'
 export const Auth = (): JSX.Element => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const [noAccount, setNoAccount] = useState(false)
+
   useEffect(() => {
     const jwt = getCookie('jwttoken')
     if (jwt != null) {
+      deleteCookie('jwttoken')
+      if (jwt == 'noaccount') {
+        setNoAccount(true)
+        dispatch(unsetIsAuth())
+        return
+      }
       dispatch(setIsAuth())
       deleteCookie('jwttoken')
       localStorage.setItem('jwttoken', jwt)
@@ -33,7 +42,13 @@ export const Auth = (): JSX.Element => {
   })
 
   return (
-    <div style={{ margin: 'auto' }}>Please wait, we are signing you in...</div>
+    <div>
+      {noAccount ? (
+        <div>You lack permissions to do anything.</div>
+      ) : (
+        <div>Signing you in...</div>
+      )}
+    </div>
   )
 }
 
