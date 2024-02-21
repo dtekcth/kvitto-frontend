@@ -19,6 +19,16 @@ export async function getLogin(): Promise<AxiosResponse | Error> {
   return result
 }
 
+export async function getLogout(token: string): Promise<AxiosResponse | Error> {
+  const result = await axios.get(API_ADDRESS + '/logout', {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+  })
+  return result
+}
+
 export async function getUser(): Promise<UserData | Error> {
   const result = await axios.get(API_ADDRESS + '/user', {
     headers: {
