@@ -8,8 +8,6 @@ interface Props {
   component: ReactNode
   path: string
   isPrivate: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [rest: string]: any
 }
 
 export const AppRoute = ({ component, isPrivate }: Props) => {
