@@ -1,21 +1,27 @@
 import { useForm } from 'react-hook-form'
-import { InputField } from '../components/InputField.tsx'
-import { BudgetPost, getBudgetPostsById } from '../api/budget-posts.tsx'
-import { RadioButton, RadioButtonOption } from '../components/RadioButton.tsx'
+import { InputField } from '../../components/input/InputField.tsx'
+import { BudgetPost, getBudgetPostsById } from '../../api/budget-posts.tsx'
+import {
+  RadioButton,
+  RadioButtonOption,
+} from '../../components/radio-button/RadioButton.tsx'
 import { useState, useEffect } from 'react'
-import { Dropdown, DropdownOption } from '../components/Dropdown.tsx'
+import {
+  Dropdown,
+  DropdownOption,
+} from '../../components/dropdown/Dropdown.tsx'
 
-import { Datepicker } from '../components/Datepicker.tsx'
-import { Textarea } from '../components/TextareaField.tsx'
-import { Committee, getCommittes } from '../api/committes.tsx'
-import { schema } from './validationScheme'
+import { Datepicker } from '../../components/datepicker/Datepicker.tsx'
+import { Textarea } from '../../components/text-area/TextareaField.tsx'
+import { Committee, getCommittes } from '../../api/committes.tsx'
+import { schema } from '../validationScheme.ts'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   FormPurchase,
   ReceivedPurchase,
   postPurchases,
-} from '../api/purchases.tsx'
-import { FileUpload } from '../components/FileUpload.tsx'
+} from '../../api/purchases.tsx'
+import { FileUpload } from '../../components/file-upload/FileUpload.tsx'
 
 import {
   Page,

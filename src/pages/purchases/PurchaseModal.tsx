@@ -1,21 +1,21 @@
-import { ModalPopup } from '../components/modal/ModalPopup'
-import { ReceivedPurchase } from '../api/purchases'
+import { ModalPopup } from '../../components/modal/ModalPopup'
+import { ReceivedPurchase } from '../../api/purchases'
 import Button from 'react-bootstrap/Button'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { InputField } from '../components/input/InputField'
+import { InputField } from '../../components/input/InputField'
 //import Input from 'react-select/dist/declarations/src/components/Input'
-import { BudgetPost, getBudgetPosts } from '../api/budget-posts'
+import { BudgetPost, getBudgetPosts } from '../../api/budget-posts'
 import {
   RadioButton,
   RadioButtonOption,
-} from '../components/radio-button/RadioButton'
-import { Dropdown, DropdownOption } from '../components/dropdown/Dropdown'
+} from '../../components/radio-button/RadioButton'
+import { Dropdown, DropdownOption } from '../../components/dropdown/Dropdown'
 import 'react-datepicker/dist/react-datepicker.css'
-import { Datepicker } from '../components/datepicker/Datepicker'
-import { Textarea } from '../components/text-area/TextareaField'
-import { Committee, getCommittes } from '../api/committes'
-import { putPurchases } from '../api/purchases'
+import { Datepicker } from '../../components/datepicker/Datepicker'
+import { Textarea } from '../../components/text-area/TextareaField'
+import { Committee, getCommittes } from '../../api/committes'
+import { putPurchases } from '../../api/purchases'
 //import { FileUpload } from '../components/FileUpload'
 
 interface Props {
@@ -25,7 +25,7 @@ interface Props {
   show: boolean
 }
 
-export const AdminModal = ({
+export const PurchaseModal = ({
   purchase,
   handleClose,
   updatePurchase,

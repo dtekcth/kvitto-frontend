@@ -1,6 +1,6 @@
 import { FieldError } from 'react-hook-form'
 import { useReducer, useRef, useState } from 'react'
-import { ErrorMessage, Label } from './styles'
+import { ErrorMessage, Label } from '../styles'
 import { FileDiv, FileText, FilesDiv } from './FileUploadStyles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faX } from '@fortawesome/free-solid-svg-icons'

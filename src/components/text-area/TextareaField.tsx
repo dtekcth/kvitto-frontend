@@ -6,14 +6,14 @@ import {
   FieldValues,
   FieldPath,
 } from 'react-hook-form'
-import { ErrorMessage, Label } from './styles'
+import { ErrorMessage, Label } from '../styles'
 import { textAreaCSS } from './TextareaFieldStyles'
 
 interface Props<Form extends FieldValues> {
   name: FieldPath<Form> // ensures the field name is one from the field-type
   label: string
   placeholder?: string | number
-  error?: FieldError
+  error: FieldError | undefined
   register: UseFormRegister<Form>
 }
 

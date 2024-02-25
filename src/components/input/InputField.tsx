@@ -7,7 +7,7 @@ import {
   FieldPath,
 } from 'react-hook-form'
 import { HTMLInputTypeAttribute } from 'react'
-import { ErrorMessage, Label } from './styles'
+import { ErrorMessage, Label } from '../styles'
 import { SerializedStyles } from '@emotion/react'
 import { inputCSS } from './InputFieldStyles'
 

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { PAGE_HEIGHT } from '../styles'
+import { PAGE_HEIGHT } from '../../styles'
 
 export const FORM_PADDING = '30px'
 

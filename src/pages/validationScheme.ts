@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { OurForm } from './Form'
+import { OurForm } from './form/Form'
 
 // When this schema does not cover all fields in OurForm, the resolver will give an error
 export const schema = yup.object<OurForm>().shape({

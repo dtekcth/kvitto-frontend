@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setIsAuth, unsetIsAuth } from '../store/store'
-import { getUser } from '../api/login'
+import { setIsAuth, unsetIsAuth } from '../../store/store'
+import { getUser } from '../../api/login'
 
 export const Auth = (): JSX.Element => {
   const navigate = useNavigate()

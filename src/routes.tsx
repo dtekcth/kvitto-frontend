@@ -1,10 +1,12 @@
 import React from 'react'
-import { Login } from './pages/Login'
-import { Form } from './pages/Form'
-import { Admin } from './pages/Admin'
-import { NoPage } from './pages/NoPage'
-import { Logout } from './pages/Logout'
-import { Auth } from './pages/Auth'
+import { Login } from './pages/login/Login'
+import { Form } from './pages/form/Form'
+import { NoPage } from './pages/nopage/NoPage'
+import { Logout } from './pages/logout/Logout'
+import { Auth } from './pages/auth/Auth'
+import { Purchases } from './pages/purchases/Purchases'
+import { Committees } from './pages/commitees/Committees'
+import { Users } from './pages/users/Users'
 
 export interface AppRouteInterface {
   path: string
@@ -34,8 +36,18 @@ export const routes: AppRouteInterface[] = [
     isPrivate: false,
   },
   {
-    path: '/admin',
-    component: <Admin></Admin>,
+    path: '/purchases',
+    component: <Purchases></Purchases>,
+    isPrivate: true,
+  },
+  {
+    path: '/committees',
+    component: <Committees></Committees>,
+    isPrivate: true,
+  },
+  {
+    path: '/users',
+    component: <Users></Users>,
     isPrivate: true,
   },
   {
