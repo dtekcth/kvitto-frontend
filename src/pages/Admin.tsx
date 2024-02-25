@@ -7,6 +7,8 @@ import { DropdownOption } from '../components/Dropdown'
 import Select from 'react-select'
 import { AdminModal } from './AdminModal'
 import { Users } from './Users'
+import { Committee, getCommittes } from '../api/committes'
+//import { Split } from './AdminStyles'
 
 export const Admin = (): JSX.Element => {
   const items = []
@@ -15,6 +17,7 @@ export const Admin = (): JSX.Element => {
   const [purchasesLength, setPurchasesLength] = useState<number>(0)
   const [purchasesPerPage, setPurchasesPerPage] = useState<number>(10)
   const [active, setActive] = useState<number>(1)
+  const [committees, setCommittees] = useState<Committee[]>([])
 
   //AdminModal constants
   const initPurchase: ReceivedPurchase = {
@@ -102,6 +105,7 @@ export const Admin = (): JSX.Element => {
 
   useEffect(() => {
     void getPurchases(purchasesPerPage, 0)
+    void getCommitteesLocal()
   }, [])
 
   const shownPurchases = []
@@ -126,6 +130,34 @@ export const Admin = (): JSX.Element => {
     }
   }
 
+  const getCommitteesLocal = (): void => {
+    void getCommittes().then(result => {
+      if (!(result instanceof Error)) {
+        const temp: Committee[] = []
+        result.forEach((value: Committee) => {
+          temp.push(value)
+        })
+        setCommittees(result)
+      }
+    })
+  }
+
+  const showCommittees = []
+  for (let index = 0; index <= committees.length; index++) {
+    if (committees[index] != null) {
+      showCommittees.push(
+        <tr key={committees[index].id}>
+          <td>{committees[index].name}</td>
+          <td>{committees[index].vismaId}</td>
+          <td>{committees[index].active.toString()}</td>
+          <td>
+            <button>Open</button>
+          </td>
+        </tr>,
+      )
+    }
+  }
+
   const pageSizeSelections: DropdownOption[] = [
     { value: 5, label: '5' },
     { value: 10, label: '10' },
@@ -137,11 +169,11 @@ export const Admin = (): JSX.Element => {
   return (
     <div>
       <Tabs
-        defaultActiveKey="home"
+        defaultActiveKey="purchases"
         id="uncontrolled-tab-example"
         className="mb-3"
       >
-        <Tab eventKey="home" title="Home">
+        <Tab eventKey="purchases" title="Purchases">
           <div
             style={{
               display: 'flex',
@@ -213,12 +245,87 @@ export const Admin = (): JSX.Element => {
             </div>
           </div>
         </Tab>
-        <Tab eventKey="profile" title="Profile">
-          <Users></Users>
+        <Tab eventKey="committees" title="Committees">
+          <div className="split-left">
+            <div className="centered">
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    Showing all Committees
+                  </div>
+                  <div className="table-div">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Visma Id</th>
+                          <th>Active</th>
+                          <th>Modal</th>
+                        </tr>
+                      </thead>
+                      <tbody>{showCommittees}</tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                Showing all Committees
+              </div>
+              <div className="table-div">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Visma Id</th>
+                      <th>Active</th>
+                      <th>Modal</th>
+                    </tr>
+                  </thead>
+                  <tbody>{showCommittees}</tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </Tab>
-        <Tab eventKey="contact" title="Contact" disabled>
-          Tab content for Contact
-        </Tab>
+        <Tab eventKey="contact" title="Contact"></Tab>
       </Tabs>
       <AdminModal
         purchase={modalPurchase}
