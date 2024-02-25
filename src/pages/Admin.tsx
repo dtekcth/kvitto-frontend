@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { DropdownOption } from '../components/Dropdown'
 import Select from 'react-select'
 import { AdminModal } from './AdminModal'
-import { Users } from './Users'
 import { Committee, getCommittes } from '../api/committes'
 //import { Split } from './AdminStyles'
 
