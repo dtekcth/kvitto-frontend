@@ -7,7 +7,7 @@ import { DropdownOption } from '../components/Dropdown'
 import Select from 'react-select'
 import { AdminModal } from './AdminModal'
 import { Committee, getCommittes } from '../api/committes'
-import { Split } from './AdminStyles'
+//import { Split } from './AdminStyles'
 
 export const Admin = (): JSX.Element => {
   const items = []
