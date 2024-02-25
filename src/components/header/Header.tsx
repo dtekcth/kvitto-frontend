@@ -62,30 +62,44 @@ export const Header = (): JSX.Element => {
             ) : (
               <></>
             )}
-
-            <Navbar.Toggle
-              style={{ marginLeft: '30px' }}
-              aria-controls="basic-navbar-nav"
-            />
+            {isAuth ? (
+              <>
+                <Navbar.Toggle
+                  style={{ marginLeft: '30px' }}
+                  aria-controls="basic-navbar-nav"
+                />
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/login">Login</Nav.Link>
+              </>
+            )}
           </div>
         ) : (
           <></>
         )}
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto" onSelect={onSelect}>
-            <Nav.Link as="div" href="/">
-              Form
-            </Nav.Link>
-            <Nav.Link as="div" href="/purchases">
-              Purchases
-            </Nav.Link>
+            {isAuth ? (
+              <>
+                <Nav.Link as="div" href="/">
+                  Form
+                </Nav.Link>
+                <Nav.Link as="div" href="/purchases">
+                  Purchases
+                </Nav.Link>
 
-            <Nav.Link as="div" href="/committees">
-              Committees
-            </Nav.Link>
-            <Nav.Link as="div" href="/users">
-              Users
-            </Nav.Link>
+                <Nav.Link as="div" href="/committees">
+                  Committees
+                </Nav.Link>
+                <Nav.Link as="div" href="/users">
+                  Users
+                </Nav.Link>
+              </>
+            ) : (
+              <></>
+            )}
+
             {isSmallDevice ? (
               <>
                 <hr className="hr" />
