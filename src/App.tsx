@@ -11,13 +11,19 @@ import { useEffect } from 'react'
 function App(): JSX.Element {
   const dispatch = useDispatch()
   useEffect(() => {
-    getUser().then(result => {
-      if (result instanceof Error) {
+    getUser()
+      .then(result => {
+        if (result instanceof Error) {
+          dispatch(unsetIsAuth())
+          localStorage.removeItem('jwttoken')
+          localStorage.removeItem('user')
+        }
+      })
+      .catch(() => {
         dispatch(unsetIsAuth())
         localStorage.removeItem('jwttoken')
         localStorage.removeItem('user')
-      }
-    })
+      })
   })
 
   return (
