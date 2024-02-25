@@ -1,32 +1,65 @@
+import { UserData } from '../api/login'
+import { useAppSelector } from '../store/store'
 import LogoSVG from './Datalogga.svg'
-import { AdminButton, HeaderDiv, Logo, TitleH1 } from './HeaderStyles'
+import {
+  HeaderDiv,
+  LeftHandSide,
+  Logo,
+  ProfilePic,
+  TitleH1,
+} from './HeaderStyles'
 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { MenuDropdown, MenuOption } from './MenuDropdown'
 
 export const Header = (): JSX.Element => {
-  const [buttonText, setButtonText] = useState('Login')
-  const [navigateURL, setNavigateURL] = useState('/login')
+  const [userData, setUserData] = useState<UserData | null>(null)
 
   const navigate = useNavigate()
   const location = useLocation()
 
-  useEffect(() => {
-    switch (window.location.pathname) {
-      case '/admin': {
-        setButtonText('Logout')
-        setNavigateURL('/logout')
-        break
-      }
-      default: {
-        setButtonText('Admin')
-        setNavigateURL('/admin')
-      }
-    }
-  }, [location])
+  const isAuth = useAppSelector(state => state.auth.isAuth)
 
-  const onClick = async () => {
-    navigate(navigateURL)
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+    if (user != null) {
+      const userObj: UserData = JSON.parse(user)
+      setUserData(userObj)
+    } else {
+      setUserData(null)
+    }
+  }, [location, isAuth])
+
+  const menuOptions: MenuOption[] = [
+    {
+      label: 'Form',
+      action: () => {
+        navigate('/')
+      },
+    },
+    {
+      label: 'Admin',
+      action: () => {
+        navigate('/admin')
+      },
+    },
+  ]
+
+  if (isAuth) {
+    menuOptions.push({
+      label: 'Logout',
+      action: () => {
+        navigate('/logout')
+      },
+    })
+  } else {
+    menuOptions.push({
+      label: 'Login',
+      action: () => {
+        navigate('/login')
+      },
+    })
   }
 
   return (
@@ -35,10 +68,14 @@ export const Header = (): JSX.Element => {
         <Logo src={LogoSVG}></Logo>
         <div>Utlägg</div>
       </TitleH1>
-
-      <AdminButton onClick={onClick} className="btn btn-primary">
-        {buttonText}
-      </AdminButton>
+      <LeftHandSide>
+        {userData != null ? (
+          <ProfilePic src={userData.picture}></ProfilePic>
+        ) : (
+          <div></div>
+        )}
+        <MenuDropdown options={menuOptions}></MenuDropdown>
+      </LeftHandSide>
     </HeaderDiv>
   )
 }

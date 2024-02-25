@@ -102,8 +102,7 @@ export const Admin = (): JSX.Element => {
     )
   }
 
-
-  useEffect(() => { 
+  useEffect(() => {
     void getPurchases(purchasesPerPage, 0)
     void getCommitteesLocal()
   }, [])
@@ -131,32 +130,32 @@ export const Admin = (): JSX.Element => {
   }
 
   const getCommitteesLocal = (): void => {
-     void getCommittes().then(result => {
-      if(!(result instanceof Error)) {
+    void getCommittes().then(result => {
+      if (!(result instanceof Error)) {
         const temp: Committee[] = []
         result.forEach((value: Committee) => {
           temp.push(value)
-      })
-      setCommittees(result)
+        })
+        setCommittees(result)
       }
     })
-  } 
-
-  const showCommittees = []
-  for(let index = 0; index <= committees.length; index++){
-    if (committees[index] != null){ 
-    showCommittees.push(
-      <tr key={committees[index].id}>
-        <td>{committees[index].name}</td>
-        <td>{committees[index].vismaId}</td>
-        <td>{committees[index].active.toString()}</td>
-        <td>
-          <button>Open</button>
-        </td>
-      </tr>,
-    )}
   }
 
+  const showCommittees = []
+  for (let index = 0; index <= committees.length; index++) {
+    if (committees[index] != null) {
+      showCommittees.push(
+        <tr key={committees[index].id}>
+          <td>{committees[index].name}</td>
+          <td>{committees[index].vismaId}</td>
+          <td>{committees[index].active.toString()}</td>
+          <td>
+            <button>Open</button>
+          </td>
+        </tr>,
+      )
+    }
+  }
 
   const pageSizeSelections: DropdownOption[] = [
     { value: 5, label: '5' },
@@ -247,8 +246,7 @@ export const Admin = (): JSX.Element => {
         </Tab>
         <Tab eventKey="committees" title="Committees">
           <div className="split-left">
-            <div className="centered"
-            >
+            <div className="centered">
               <div
                 style={{
                   display: 'flex',
@@ -269,7 +267,7 @@ export const Admin = (): JSX.Element => {
                       justifyContent: 'center',
                     }}
                   >
-                      Showing all Committees 
+                    Showing all Committees
                   </div>
                   <div className="table-div">
                     <table>
@@ -285,7 +283,7 @@ export const Admin = (): JSX.Element => {
                     </table>
                   </div>
                 </div>
-              </div> 
+              </div>
             </div>
           </div>
           <div
@@ -308,7 +306,7 @@ export const Admin = (): JSX.Element => {
                   justifyContent: 'center',
                 }}
               >
-                  Showing all Committees 
+                Showing all Committees
               </div>
               <div className="table-div">
                 <table>
@@ -326,9 +324,7 @@ export const Admin = (): JSX.Element => {
             </div>
           </div>
         </Tab>
-        <Tab eventKey="contact" title="Contact">
-          
-        </Tab>
+        <Tab eventKey="contact" title="Contact"></Tab>
       </Tabs>
       <AdminModal
         purchase={modalPurchase}

@@ -1,24 +1,44 @@
 import axios, { AxiosResponse } from 'axios'
 import { API_ADDRESS } from '../Variables'
-import { Buffer } from 'buffer'
 
-export async function getLogin(
-  username: string,
-  password: string,
-): Promise<AxiosResponse | Error> {
-  // 👇️ const data: GetUsersResponse
-  let encodedStr
-  if (username === '' && password === '') {
-    encodedStr = localStorage.getItem('credentials')
-  } else {
-    const encode = (str: string): string =>
-      Buffer.from(str, 'binary').toString('base64')
-    encodedStr = encode(username + ':' + password)
-  }
+export interface UserData {
+  id: string
+  Email: string
+  verified_email: boolean
+  name: string
+  given_name: string
+  family_name: string
+  picture: string
+  locale: string
+  hd: string
+}
 
-  return await axios.get(API_ADDRESS + '/login', {
+export async function getLogin(): Promise<AxiosResponse | Error> {
+  const result = await axios.get(API_ADDRESS + '/login', {})
+  window.location.href = result.data
+  return result
+}
+
+export async function getLogout(token: string): Promise<AxiosResponse | Error> {
+  const result = await axios.get(API_ADDRESS + '/logout', {
     headers: {
-      Authorization: 'Basic ' + encodedStr,
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + token,
     },
   })
+  return result
+}
+
+export async function getUser(): Promise<UserData | Error> {
+  const result = await axios.get(API_ADDRESS + '/user', {
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('jwttoken'),
+    },
+  })
+  if (result instanceof Error) {
+    return result
+  } else {
+    return result.data as UserData
+  }
 }
