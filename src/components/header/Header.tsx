@@ -6,23 +6,20 @@ import Navbar from 'react-bootstrap/Navbar'
 import DataLogga from '../Datalogga.svg'
 
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { MenuOption } from '../menu-dropdown/MenuDropdown'
 import { ProfilePic } from './HeaderStyles'
 import { useMediaQuery } from '@uidotdev/usehooks'
+import { SMALL_MEDIA_QUERY } from '../../styles'
+import { useNavigate } from 'react-router-dom'
 
 export const Header = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userData, setUserData] = useState<UserData | null>(null)
-  const [expanded, setExpanded] = useState<boolean>(false)
-
   const navigate = useNavigate()
-  const location = useLocation()
 
-  const isSmallDevice = useMediaQuery('only screen and (max-width : 1000px)')
+  const isSmallDevice = useMediaQuery(SMALL_MEDIA_QUERY)
 
   const isAuth = useAppSelector(state => state.auth.isAuth)
-  console.log(expanded)
+
   const a = document.getElementById('navbar')
   if (a) {
     if (a.offsetHeight) {
@@ -41,53 +38,18 @@ export const Header = (): JSX.Element => {
     } else {
       setUserData(null)
     }
-  }, [location, isAuth])
+  }, [isAuth])
 
-  const menuOptions: MenuOption[] = [
-    {
-      label: 'Form',
-      action: () => {
-        navigate('/')
-      },
-    },
-    {
-      label: 'Admin',
-      action: () => {
-        navigate('/admin')
-      },
-    },
-  ]
-
-  if (isAuth) {
-    menuOptions.push({
-      label: 'Logout',
-      action: () => {
-        navigate('/logout')
-      },
-    })
-  } else {
-    menuOptions.push({
-      label: 'Login',
-      action: () => {
-        navigate('/login')
-      },
-    })
-  }
-
-  const handleCollapsed = (expanded: boolean) => {
-    console.log(expanded)
-    setExpanded(expanded)
+  const onSelect = (uri: string | null) => {
+    if (uri) {
+      navigate(uri)
+    }
   }
 
   return (
-    <Navbar
-      onToggle={handleCollapsed}
-      expand="lg"
-      className="bg-body-tertiary"
-      id="navbar"
-    >
+    <Navbar expand="lg" className="bg-body-tertiary" id="navbar">
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand as="div">
           <ProfilePic src={DataLogga}></ProfilePic>
         </Navbar.Brand>
 
@@ -95,9 +57,6 @@ export const Header = (): JSX.Element => {
           <div>
             {userData ? (
               <>
-                <Nav>
-                  <Nav.Link href="/logout">Logout</Nav.Link>
-                </Nav>
                 <ProfilePic src={userData.picture}></ProfilePic>
               </>
             ) : (
@@ -113,29 +72,54 @@ export const Header = (): JSX.Element => {
           <></>
         )}
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/">Form</Nav.Link>
-            <Nav.Link href="/purchases">Purchases</Nav.Link>
-            <Nav.Link href="/committees">Committees</Nav.Link>
-            <Nav.Link href="/users">Users</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-        {!isSmallDevice ? (
-          <Nav>
-            {userData ? (
+          <Nav className="me-auto" onSelect={onSelect}>
+            <Nav.Link as="div" href="/">
+              Form
+            </Nav.Link>
+            <Nav.Link as="div" href="/purchases">
+              Purchases
+            </Nav.Link>
+
+            <Nav.Link as="div" href="/committees">
+              Committees
+            </Nav.Link>
+            <Nav.Link as="div" href="/users">
+              Users
+            </Nav.Link>
+            {isSmallDevice ? (
               <>
-                <Nav>
-                  <Nav.Link href="/logout">Logout</Nav.Link>
-                </Nav>
-                <ProfilePic src={userData.picture}></ProfilePic>
+                <hr className="hr" />
+                {userData ? (
+                  <>
+                    <Nav.Link href="/logout">Logout</Nav.Link>
+                  </>
+                ) : (
+                  <Nav.Link href="/login">Login</Nav.Link>
+                )}
               </>
             ) : (
               <></>
             )}
           </Nav>
-        ) : (
-          <></>
-        )}
+          {!isSmallDevice ? (
+            <>
+              {userData ? (
+                <>
+                  <Nav>
+                    <Nav.Link href="/logout">Logout</Nav.Link>
+                  </Nav>
+                  <ProfilePic src={userData.picture}></ProfilePic>
+                </>
+              ) : (
+                <Nav>
+                  <Nav.Link href="/login">Login</Nav.Link>
+                </Nav>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )

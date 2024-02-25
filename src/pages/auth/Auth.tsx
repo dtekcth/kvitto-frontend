@@ -19,7 +19,6 @@ export const Auth = (): JSX.Element => {
         dispatch(unsetIsAuth())
         return
       }
-      dispatch(setIsAuth())
       deleteCookie('jwttoken')
       localStorage.setItem('jwttoken', jwt)
 
@@ -29,9 +28,9 @@ export const Auth = (): JSX.Element => {
             dispatch(unsetIsAuth())
             navigate('/')
           } else {
-            console.log(JSON.stringify(result))
+            dispatch(setIsAuth())
             localStorage.setItem('user', JSON.stringify(result))
-            navigate('/admin')
+            navigate('/')
           }
         })
         .catch(() => {
