@@ -14,8 +14,10 @@ export const AppRoute = ({ component, isPrivate }: Props) => {
   let isAuth = useAppSelector(state => state.auth.isAuth)
   const dispatch = useDispatch()
   if (localStorage.getItem('jwttoken') != null) {
-    dispatch(setIsAuth())
-    isAuth = true
+    if (!isAuth) {
+      dispatch(setIsAuth())
+      isAuth = true
+    }
   }
 
   if (isPrivate && !isAuth) {
