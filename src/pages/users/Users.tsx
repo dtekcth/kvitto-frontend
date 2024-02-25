@@ -1,9 +1,9 @@
 // import { Navigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
-import { addUser } from '../api/users'
-import { Dropdown, DropdownOption } from '../components/Dropdown'
-import { InputField } from '../components/InputField'
+import { addUser } from '../../api/users'
+import { Dropdown, DropdownOption } from '../../components/dropdown/Dropdown'
+import { InputField } from '../../components/input/InputField'
 
 interface AddUser {
   email: string

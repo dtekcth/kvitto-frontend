@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../store/store'
-import { getLogin, getUser } from '../api/login'
+import { useAppSelector } from '../../store/store'
+import { getLogin, getUser } from '../../api/login'
 
 export interface LoginForm {
   username: string
@@ -14,7 +14,7 @@ export const Login = (): JSX.Element => {
     console.log(result)
   })
   if (isAuth) {
-    navigate('/admin')
+    navigate('/')
   } else {
     getLogin()
   }

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { HEADER_HEIGHT } from '../styles'
+import { HEADER_HEIGHT } from '../../styles'
 
 export const Logo = styled.img({
   height: '50px',
@@ -7,7 +7,7 @@ export const Logo = styled.img({
 
 const PROFILE_HEIGHT = `calc(${HEADER_HEIGHT} - 20px)`
 
-export const HeaderDiv = styled.div({
+export const HeaderDiv = {
   height: HEADER_HEIGHT,
   width: '100%',
   border: '5px black',
@@ -15,7 +15,7 @@ export const HeaderDiv = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-})
+}
 
 export const LeftHandSide = styled.div({
   marginRight: '1%',

@@ -6,4 +6,4 @@ export const Form = styled('form')({
 })
 
 export const HEADER_HEIGHT = '80px'
-export const PAGE_HEIGHT = `calc(100% - ${HEADER_HEIGHT})`
+export const PAGE_HEIGHT = `calc(100% - var(--nav-height))`

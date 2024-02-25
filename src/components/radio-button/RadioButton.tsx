@@ -5,7 +5,7 @@ import {
   FieldPath,
 } from 'react-hook-form'
 import styled from '@emotion/styled'
-import { ErrorMessage, Label } from './styles'
+import { ErrorMessage, Label } from '../styles'
 import { OptionLabel } from './RadioButtonStyles'
 
 export interface RadioButtonOption {

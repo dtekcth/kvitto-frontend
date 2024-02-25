@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 
 import { Navigate } from 'react-router-dom'
-import { setIsAuth, useAppSelector } from '../store/store'
+import { setIsAuth, useAppSelector } from '../../store/store'
 import { useDispatch } from 'react-redux'
 
 interface Props {

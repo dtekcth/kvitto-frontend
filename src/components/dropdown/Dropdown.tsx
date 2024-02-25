@@ -7,7 +7,7 @@ import {
   FieldPath,
 } from 'react-hook-form'
 // import styled from '@emotion/styled'
-import { ErrorMessage, Label } from './styles'
+import { ErrorMessage, Label } from '../styles'
 import Select, { ActionMeta, SingleValue } from 'react-select'
 
 export interface DropdownOption {
