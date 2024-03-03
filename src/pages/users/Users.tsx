@@ -1,13 +1,22 @@
 // import { Navigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
-import { addUser } from '../../api/users'
+import { addUser, getAllUsers, getRoles } from '../../api/users'
 import { Dropdown, DropdownOption } from '../../components/dropdown/Dropdown'
 import { InputField } from '../../components/input/InputField'
+import { useEffect, useState } from 'react'
 
 interface AddUser {
   email: string
   role: number
+}
+
+interface User {
+  google_id: number
+  id: number
+  email: string
+  role_id: number
+  pending: boolean
 }
 
 export const Users = (): JSX.Element => {
@@ -19,6 +28,25 @@ export const Users = (): JSX.Element => {
 
     // When the resolver does not cover all fields in OurForm, the resolver will give an error
   } = useForm<AddUser>()
+
+  const [users, setUsers] = useState<User[]>([])
+
+  useEffect(() => {
+    getRoles().then((result): void => {
+      if (result instanceof Error) {
+      } else {
+        console.log(result)
+      }
+    })
+
+    getAllUsers().then((result): void => {
+      if (result instanceof Error) {
+      } else {
+        console.log(result)
+        setUsers(result.data.users)
+      }
+    })
+  }, [])
 
   const onSubmit = async (formData: AddUser) => {
     await addUser(formData.email, formData.role)
@@ -44,6 +72,9 @@ export const Users = (): JSX.Element => {
         }}
       ></Dropdown>
       <button onClick={handleSubmit(onSubmit)}>Add user</button>
+      {users.map(val => {
+        return <div key={val.email}>{val.email}</div>
+      })}
     </div>
   )
 }
