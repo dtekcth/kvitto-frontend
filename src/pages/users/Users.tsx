@@ -1,80 +1,98 @@
-// import { Navigate } from 'react-router-dom'
-
-import { useForm } from 'react-hook-form'
-import { addUser, getAllUsers, getRoles } from '../../api/users'
-import { Dropdown, DropdownOption } from '../../components/dropdown/Dropdown'
-import { InputField } from '../../components/input/InputField'
+import { getAllUsers, getRoles } from '../../api/users'
+import { DropdownOption } from '../../components/dropdown/Dropdown'
 import { useEffect, useState } from 'react'
+import { UserTable } from './UserTable'
+import { AddUserModal } from './AddUserModal'
+import { DeleteUserModal } from './DeleteUserModal'
 
-interface AddUser {
-  email: string
-  role: number
-}
-
-interface User {
-  google_id: number
+export interface User {
+  google_id: string
   id: number
   email: string
   role_id: number
   pending: boolean
 }
 
+export interface Roles {
+  role_name: string
+  role_id: number
+  perm_level: number
+}
+
+export type RolesMap = {
+  [id: number]: string
+}
+
 export const Users = (): JSX.Element => {
-  const {
-    register,
-    control,
-    setValue,
-    handleSubmit,
-
-    // When the resolver does not cover all fields in OurForm, the resolver will give an error
-  } = useForm<AddUser>()
-
   const [users, setUsers] = useState<User[]>([])
+  const [roles, setRoles] = useState<RolesMap>({})
+  const [roleOptions, setRoleOptions] = useState<DropdownOption[]>([])
+  const [showAddUserModal, setShowAddUserModal] = useState(false)
+  const [showDeleteUserModal, setShowDeleteUserModal] = useState(false)
+  const [deleteUser, setDeleteUser] = useState<User | null>(null)
 
   useEffect(() => {
     getRoles().then((result): void => {
       if (result instanceof Error) {
       } else {
-        console.log(result)
+        const rolesMap: RolesMap = {}
+        const roles = result.data.roles as Roles[]
+        const tempRoleOptions: DropdownOption[] = []
+        roles.map((role): void => {
+          rolesMap[role.role_id] = role.role_name.toUpperCase();
+          tempRoleOptions.push({value: role.role_id, label: role.role_name.toUpperCase()});
+        })
+        setRoleOptions(tempRoleOptions)
+        setRoles(rolesMap)
       }
     })
 
     getAllUsers().then((result): void => {
       if (result instanceof Error) {
       } else {
-        console.log(result)
         setUsers(result.data.users)
       }
     })
   }, [])
 
-  const onSubmit = async (formData: AddUser) => {
-    await addUser(formData.email, formData.role)
+  const deleteUserCallback = (user: User): void => {
+    setDeleteUser(user)
+    setShowDeleteUserModal(true)
   }
 
-  const roleOptions: DropdownOption[] = [
-    { label: 'Admin', value: 1 },
-    { label: 'Trasurer', value: 2 },
-    { label: 'Regular', value: 3 },
-    { label: 'Auditer', value: 4 },
-  ]
+  const handleCloseAddUser = (): void => {
+    setShowAddUserModal(false)
+  }
+
+  const handleCloseDeleteUser = (): void => {
+    setShowDeleteUserModal(false)
+  }
+
+  const handleShowAddUser = (): void => {
+    setShowAddUserModal(true)
+  }
+
   return (
     <div>
-      <InputField name="email" type="text" label="Email" register={register} />
-      <Dropdown
-        name="role"
-        label="Choose a role"
-        options={roleOptions}
-        control={control}
-        register={register}
-        valueChange={(option: DropdownOption | null) => {
-          option != null && setValue('role', option.value as number)
-        }}
-      ></Dropdown>
-      <button onClick={handleSubmit(onSubmit)}>Add user</button>
-      {users.map(val => {
-        return <div key={val.email}>{val.email}</div>
-      })}
+      <button onClick={handleShowAddUser}>Add user</button>
+      <UserTable 
+        users={users} 
+        roleOptions={roleOptions} 
+        roles={roles} 
+        deleteUser={deleteUserCallback}>
+      </UserTable>
+
+      <DeleteUserModal
+        handleClose={handleCloseDeleteUser}
+        show={showDeleteUserModal}
+        user={deleteUser}>
+      </DeleteUserModal>
+      
+      <AddUserModal 
+        show={showAddUserModal} 
+        handleClose={handleCloseAddUser} 
+        roleOptions={roleOptions}>
+      </AddUserModal>
     </div>
   )
 }

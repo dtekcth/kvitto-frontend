@@ -20,6 +20,24 @@ export async function addUser(
   return result
 }
 
+export async function deleteUser(
+  email: string
+): Promise<AxiosResponse | Error> {
+  const cred = localStorage.getItem('jwttoken')
+  const result = await axios.post(
+    API_ADDRESS + '/deleteuser',
+    { email: email },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + cred,
+      },
+    },
+  )
+  return result
+}
+
 export async function getUsers(): Promise<AxiosResponse | Error> {
   const cred = localStorage.getItem('jwttoken')
   const result = await axios.get(
